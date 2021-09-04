@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import { ListItem, SharePointModel } from '@fusion5/controller-sharepoint-list';
+import { ListItem, SharePointModel } from '@mauriora/controller-sharepoint-list';
 import { FieldTypes, IFieldInfo } from '@pnp/sp/fields';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';

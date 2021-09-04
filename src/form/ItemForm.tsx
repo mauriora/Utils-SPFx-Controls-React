@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { DefaultButton, IconButton, PrimaryButton, Spinner, Stack } from '@fluentui/react';
-import { ListItem, SharePointModel } from '@fusion5/controller-sharepoint-list';
+import { ListItem, SharePointModel } from '@mauriora/controller-sharepoint-list';
 import { PropertyField, PropertyFieldProps } from './PropertyField';
 import { clone, assign } from '@microsoft/sp-lodash-subset'
 import { useAsyncError } from '../hooks/AsyncError';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { PropertyFieldProps } from './PropertyField';
-import { getById, ListItemBase, SharePointContext } from '@fusion5/controller-sharepoint-list';
+import { getById, ListItemBase, SharePointContext } from '@mauriora/controller-sharepoint-list';
 import { Label, Stack } from '@fluentui/react';
 // import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react';
 import { ComboBoxListItemPicker } from './SpfxControlsFix/ComboBoxListItemPicker';

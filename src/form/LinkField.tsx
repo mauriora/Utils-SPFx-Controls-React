@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FunctionComponent, useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Image, Label, Link, Stack, TextField } from '@fluentui/react';
-import { IFieldInfo, Link as LinkItem, ListItemBase } from '@fusion5/controller-sharepoint-list';
+import { IFieldInfo, Link as LinkItem, ListItemBase } from '@mauriora/controller-sharepoint-list';
 import { PropertyFieldProps } from './PropertyField';
 
 /**

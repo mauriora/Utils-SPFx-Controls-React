@@ -1,4 +1,4 @@
-import { getSiteSync, UserLookup } from '@fusion5/controller-sharepoint-list';
+import { getSiteSync, UserLookup } from '@mauriora/controller-sharepoint-list';
 import { ICommentAuthorData } from "@pnp/sp/comments";
 
 export interface UserInfoPartial {

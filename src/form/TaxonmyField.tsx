@@ -2,7 +2,7 @@ import * as React from "react";
 import { FunctionComponent, useCallback } from "react";
 import { PropertyFieldProps } from "./PropertyField";
 import { observer } from 'mobx-react-lite';
-import { MetaTerm } from "@fusion5/controller-sharepoint-list";
+import { MetaTerm } from "@mauriora/controller-sharepoint-list";
 import { EmptyGuid, IPickerTerm, IPickerTerms, TaxonomyPicker } from "@pnp/spfx-controls-react";
 
 export const REPLACE_TAG = '*TAXONOMY-REPLACE-TAG*';

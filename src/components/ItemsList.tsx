@@ -1,7 +1,7 @@
 import { SelectionMode, Spinner } from '@fluentui/react';
 import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
-import * as Controller from '@fusion5/controller-sharepoint-list';
+import * as Controller from '@mauriora/controller-sharepoint-list';
 import {
     FieldUrlRenderer,
     FieldTextRenderer,
@@ -10,7 +10,7 @@ import {
     FieldDateRenderer
 } from '@pnp/spfx-controls-react';
 import { observer } from 'mobx-react-lite';
-import { ListItem } from '@fusion5/controller-sharepoint-list';
+import { ListItem } from '@mauriora/controller-sharepoint-list';
 
 export interface ListTableProps {
     model: Controller.SharePointModel;

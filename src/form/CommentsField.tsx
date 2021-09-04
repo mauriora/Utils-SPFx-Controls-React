@@ -3,7 +3,7 @@ import { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } 
 import { observer } from 'mobx-react-lite';
 import { ActivityItem, HoverCard, HoverCardType, IconButton, IStackTokens, Link, mergeStyleSets, PersonaSize, Spinner, Stack, StackItem, Text, TextField } from '@fluentui/react';
 import { PropertyFieldProps } from './PropertyField';
-import { ListItem } from '@fusion5/controller-sharepoint-list';
+import { ListItem } from '@mauriora/controller-sharepoint-list';
 import { ICommentInfo } from '@pnp/sp/comments';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { useAsyncError } from '../hooks/AsyncError';

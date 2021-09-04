@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { observer } from 'mobx-react-lite';
 import { PropertyFieldProps } from './PropertyField';
-import { getById, ListItemBase } from '@fusion5/controller-sharepoint-list';
+import { getById, ListItemBase } from '@mauriora/controller-sharepoint-list';
 import { Label, Stack } from '@fluentui/react';
 import { ListItemPicker } from '@pnp/spfx-controls-react';
 

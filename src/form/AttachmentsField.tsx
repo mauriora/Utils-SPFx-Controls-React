@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { ListItemAttachments, IListItemAttachmentsProps } from "@pnp/spfx-controls-react";
 import { DragDropFiles } from "@pnp/spfx-controls-react/lib/DragDropFiles";
 import { ErrorBoundary } from "../components/ErrorBoundary";
-import { ListItem, SharePointList, IFieldInfo, ListItemBase } from "@fusion5/controller-sharepoint-list";
+import { ListItem, SharePointList, IFieldInfo, ListItemBase } from "@mauriora/controller-sharepoint-list";
 import { useAsyncError } from "..";
 
 interface FileInfo {

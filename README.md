@@ -67,7 +67,7 @@ Include this module/repositiory in your solution as a submodule in shared. Refer
 2.	Add to `package.json`
 ```json
   "dependencies": {
-    "@fusion5/utils-spfx-controls-react": "*"
+    "@mauriora/utils-spfx-controls-react": "*"
   }
 ```
 

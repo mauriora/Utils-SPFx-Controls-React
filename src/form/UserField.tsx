@@ -3,7 +3,7 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { PropertyFieldProps } from "./PropertyField";
 import { observer } from 'mobx-react-lite';
-import { personaProps2User, UserLookup, UserFull } from "@fusion5/controller-sharepoint-list";
+import { personaProps2User, UserLookup, UserFull } from "@mauriora/controller-sharepoint-list";
 import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 
 
