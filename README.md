@@ -3,9 +3,8 @@ Wrappers and tools for @pnp/SPFX-Controls-react and @FluentUI/react.
 For each FieldType a component with label exists, that excepts the same props.
 Mostly they are straight HOCs implementing onChange. Sometimes they'll add the label.
 
-# Fixes
-Contains a post install script `patchDecorators.js` wich is executed at the end of `lerna bootstrap` (yarn install).
-It fixes a broken pointer in `@microsoft/decorators/package.json` . This fix may not be necessary and should be reviewed to be removed.
+# Note
+Not quite public yet, this is part of the [hybrid repro MVC SharePoint example implementation](https://github.com/mauriora/reusable-hybrid-repo-mvc-spfx-examples)
 
 # Components
 ## Form & Fields
