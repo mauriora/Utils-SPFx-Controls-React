@@ -27,18 +27,23 @@ export const  LookupField: FunctionComponent<PropertyFieldProps> = observer(({ i
         selectedItems = [listItemBaseToLookupKeyName(item[property])];
     }
 
-    const LookupKeyNameTolistItemBase = (lookup: LookupKeyName): ListItemBase => {
+    const lookupKeyNameTolistItemBase = async (lookup: LookupKeyName): Promise<ListItemBase> => {
         const listItem = new ListItemBase();
         listItem.id = Number(lookup.key);
         listItem.title = lookup.name;
         const lookUpListId = info['LookupList'];
         const controller = getById(lookUpListId);
-        const controllerItem = controller.addGetPartial(listItem);
+        const controllerItem = await controller.addGetPartial(listItem);
         return controllerItem;
     };
 
-    const onSelectedItems = (items: { key: string; name: string }[]) => {
-        const lookUps = items.map(LookupKeyNameTolistItemBase);
+    const onSelectedItems = async (items: { key: string; name: string }[]) => {
+        const lookUps = new Array<ListItemBase>();
+        for( const item of items) {
+            lookUps.push(
+                await lookupKeyNameTolistItemBase(item)
+            );
+        }
 
         if (isMulti) {
             item[property] = lookUps;
