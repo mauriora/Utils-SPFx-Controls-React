@@ -30,18 +30,23 @@ export const  LookupComboBoxField: PropertyFieldFC = observer(({ info, item, pro
         selectedItems = [classToPlain( item[property] ) as Lookup];
     }
 
-    const lookupTolistItemBase = (lookup: Lookup): ListItemBase => {
+    const lookupTolistItemBase = async (lookup: Lookup): Promise<ListItemBase> => {
         const listItem = new ListItemBase().init();
         listItem.id = lookup.ID;
         listItem.title = lookup.Title;
         const lookUpListId = getLookupList( info );
         const controller = getById(lookUpListId);
-        const controllerItem = controller.addGetPartial(listItem);
+        const controllerItem = await controller.addGetPartial(listItem);
         return controllerItem;
     };
 
-    const onSelectedItems = (items: Lookup[]) => {
-        const lookUps = items.map(lookupTolistItemBase);
+    const onSelectedItems = async (items: Lookup[]) => {
+        const lookUps = new Array<ListItemBase>();
+        for( const item of items) {
+            lookUps.push(
+                await lookupTolistItemBase(item)
+            );
+        }
         if (isMulti) {
             (item[property] as Array<ListItemBase>) = lookUps;
         } else {
