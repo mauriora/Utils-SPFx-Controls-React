@@ -1,78 +1,96 @@
 import * as React from 'react';
-import { FunctionComponent } from 'react';
 import { observer } from 'mobx-react-lite';
 import { TextField as FluentTextField, Checkbox, Rating, SpinButton, Link } from '@fluentui/react';
-import { PropertyFieldProps } from './PropertyField';
+import { PropertyFieldFC } from './PropertyField';
+import { getMaximumValue, getMinimumValue } from '@mauriora/controller-sharepoint-list';
 
-export const RatingCountField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) =>
-    <FluentTextField
+export const RatingCountField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const value = item[property];
+    if(typeof value !== 'string') throw new Error(`RatingCountField: Property '${property}' is not a string it's ${typeof value}`);
+
+    return <FluentTextField
         iconProps={{ iconName: 'FavoriteStar' }}
         label={info.Title}
         required={info.Required}
-        value={item[property]}
+        value={value}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
         onChange={() => console.warn(`PropertyField( ${info.TypeAsString}[${info.FieldTypeKind}] ${property} ).onChange not implemented`)}
     />
-);
+});
 
-export const BooleanField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) =>
-    <Checkbox
+export const BooleanField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const value = item[property];
+    if(typeof value !== 'boolean') throw new Error(`BooleanField: Property '${property}' is not a boolean it's ${typeof value}`);
+
+    return <Checkbox
         label={info.Title}
-        checked={item[property]}
+        checked={value}
         disabled={info.ReadOnlyField}
-        onChange={(e, checked) => item[property] = checked}
+        onChange={(e, checked) => (item[property] as unknown) = checked}
     />
-);
+});
 
 
-export const CurrencyField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) =>
-    <FluentTextField
+export const CurrencyField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const value = item[property];
+    if(typeof value !== 'string') throw new Error(`CurrencyField: Property '${property}' is not a string it's ${typeof value}`);
+
+    return <FluentTextField
         label={info.Title}
-        value={item[property]}
+        value={value}
         required={info.Required}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
         prefix={'$'}
-        onChange={(e, newValue) => item[property] = Number(newValue)}
+        onChange={(e, newValue) => (item[property] as unknown) = Number(newValue)}
     />
-);
+});
 
-export const NumberField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) =>
-    <SpinButton
+export const NumberField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const value = item[property];
+    if(typeof value !== 'number') throw new Error(`NumberField: Property '${property}' is not a string it's ${typeof value}`);
+
+    return <SpinButton
         label={info.Title}
-        value={item[property]}
+        value={value as unknown as string}
         disabled={info.ReadOnlyField}
         placeholder={info.Description}
-        min={info['MinimumValue'] == Number.MIN_VALUE ? 0 : info['MinimumValue']}
-        max={info['MaximumValue'] == Number.MAX_VALUE ? 100 : info['MaximumValue']}
-        step={info['MaximumValue'] == Number.MAX_VALUE ? 1 : info['MaximumValue'] / 100}
-        incrementButtonAriaLabel={`Increase value by ${info['MaximumValue'] == Number.MAX_VALUE ? 1 : info['MaximumValue'] / 100}`}
-        decrementButtonAriaLabel={`Decrease value by ${info['MaximumValue'] == Number.MAX_VALUE ? 1 : info['MaximumValue'] / 100}`}
-        onChange={(e, newValue: string) => item[property] = Number(newValue)}
+        min={getMinimumValue( info ) == Number.MIN_VALUE ? 0 : getMinimumValue( info )}
+        max={getMaximumValue( info ) == Number.MAX_VALUE ? 100 : getMaximumValue( info )}
+        step={getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}
+        incrementButtonAriaLabel={`Increase value by ${getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}`}
+        decrementButtonAriaLabel={`Decrease value by ${getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}`}
+        onChange={(e, newValue: string) => (item[property] as unknown) = Number(newValue)}
     />
-);
+});
 
-export const TextField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) =>
-    <FluentTextField
+export const TextField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const value = item[property];
+    if(typeof value !== 'string') throw new Error(`TextField: Property '${property}' is not a string it's ${typeof value}`);
+
+    return <FluentTextField
         label={info.Title}
-        value={item[property]}
+        value={value}
         required={info.Required}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
-        onChange={(e, newValue) => item[property] = newValue}
+        onChange={(e, newValue) => (item[property] as unknown) = newValue}
     />
-);
+});
 
 
-export const CounterField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) =>
-    <FluentTextField
+export const CounterField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const value = item[property];
+    if(typeof value !== 'string') throw new Error(`CounterField: Property '${property}' is not a string it's ${typeof value}`);
+
+    return <FluentTextField
         label={info.Title}
-        value={item[property]}
+        value={value}
         required={info.Required}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
-        onChange={(e, newValue) => item[property] = Number(newValue)}
+        onChange={(e, newValue) => (item[property] as unknown) = Number(newValue)}
     />
-);
+});
 

@@ -1,12 +1,12 @@
 import { Spinner } from "@fluentui/react";
 import * as React from "react";
 import { FunctionComponent, useState } from "react";
-import { PropertyFieldProps } from "./PropertyField";
+import { PropertyFieldFC } from './PropertyField';
 import { observer } from 'mobx-react-lite';
 import { ListItemAttachments, IListItemAttachmentsProps } from "@pnp/spfx-controls-react";
 import { DragDropFiles } from "@pnp/spfx-controls-react/lib/DragDropFiles";
 import { ErrorBoundary } from "../components/ErrorBoundary";
-import { ListItem, SharePointList, IFieldInfo, ListItemBase } from "@mauriora/controller-sharepoint-list";
+import { IFieldInfo, ListItemBase } from "@mauriora/controller-sharepoint-list";
 import { useAsyncError } from "..";
 
 interface FileInfo {
@@ -22,7 +22,7 @@ interface FileInfo {
     webkitRelativePath: string;
 }
 
-const toBase64 = file => new Promise<ArrayBuffer>((resolve, reject) => {
+const toBase64 = (file: Blob) => new Promise<ArrayBuffer>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result as ArrayBuffer);
     reader.onerror = error => reject(error);
@@ -50,7 +50,7 @@ const AttachmentControl: FunctionComponent<AttachmentControlProps> = observer(({
     const addAttachment = async (fileInfo: FileInfo) => {
         if (item.pnpItem) {
             setUploading(true);
-            const content: ArrayBuffer = await toBase64(fileInfo);
+            const content: ArrayBuffer = await toBase64(fileInfo as unknown as Blob);
             try {
                 const addResult = await item.pnpItem.attachmentFiles.add(
                     fileInfo.name,
@@ -91,7 +91,7 @@ const AttachmentControl: FunctionComponent<AttachmentControlProps> = observer(({
         </DragDropFiles>;
 });
 
-export const AttachmentsField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, model }) => 
+export const AttachmentsField: PropertyFieldFC = observer(({ info, item, model }) => 
     <ErrorBoundary>
         {item?.id ?
             <AttachmentControl

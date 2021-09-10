@@ -15,8 +15,11 @@ const transparentFieldStyles: Partial<ITextFieldStyles> = {
     }
 };
 
-export const LikesCountField: FunctionComponent<LikesCountFieldProps> = observer(({ info, item, property, mini }) =>
-    <TextField
+export const LikesCountField: FunctionComponent<LikesCountFieldProps> = observer(({ info, item, property, mini }) =>{
+    const value = item[property];
+    if (typeof value !== 'number') throw new Error(`Property '${property}' is not a number it is ${typeof value}`);
+
+    return <TextField
         iconProps={{
             iconName: item.isLikedByMe() ? 'LikeSolid' : 'Like',
             style: { pointerEvents: "auto", cursor: "pointer" },
@@ -25,10 +28,10 @@ export const LikesCountField: FunctionComponent<LikesCountFieldProps> = observer
         style={mini ? { minWidth: 40, width: 40 + ((Math.floor(Math.log10(item[property] ? Number(item[property]) : 1)) + 1) * 15) } : undefined}
         styles={mini ? transparentFieldStyles : undefined}
         label={mini ? undefined : info.Title}
-        value={item[property]}
+        value={value as unknown as string}
         readOnly={true}
         placeholder={info.Description}
         title={info.Title}
     />
-);
+});
 

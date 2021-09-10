@@ -7,7 +7,7 @@ import {
   IPropertyPaneCustomFieldProps
 } from '@microsoft/sp-property-pane';
 
-export type PropertyChangeCallback = (targetProperty: string, ...changeArgs) => void;
+export type PropertyChangeCallback = (targetProperty: string, ...changeArgs: unknown[]) => void;
 
 export class CustomPropertyPaneField<T> implements IPropertyPaneField<Omit<T, 'onChange'>> {
   public type: PropertyPaneFieldType = PropertyPaneFieldType.Custom;

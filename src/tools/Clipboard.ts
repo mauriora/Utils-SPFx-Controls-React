@@ -1,5 +1,5 @@
 
-const fallbackCopyTextToClipboard = (text) => {
+const fallbackCopyTextToClipboard = (text: string) => {
     const textArea = document.createElement("textarea");
     textArea.value = text;
 
@@ -25,7 +25,7 @@ const fallbackCopyTextToClipboard = (text) => {
     return successful;
 };
 
-export const copyTextToClipboard = async (text): Promise<boolean> => {
+export const copyTextToClipboard = async (text: string): Promise<boolean> => {
     if (!navigator.clipboard) {
         return fallbackCopyTextToClipboard(text);
     }

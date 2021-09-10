@@ -19,16 +19,17 @@ export interface ListTableProps {
 
 
 interface TextFieldRenderProps {
-    item: Controller.ListItem;
+    item: any;
     property: string;
 }
 
 const TextFieldRender = observer(({ item, property }: TextFieldRenderProps) => (<FieldTextRenderer text={item[property]} />));
 
-const stripDeep = ({ controller, pnpItem, delete: fDelete, source, ...rest }: Controller.ListItemBase) => {
-    for( const property in rest) {
-        if( rest[property] && ('object' === typeof( rest[property] ))) {
-            rest[property] = stripDeep( rest[property] )
+const stripDeep = ({ controller, pnpItem, delete: fDelete, setController, source, ...rest}: Controller.ListItemBase) => {
+    const stripped = rest as any;
+    for( const property in stripped) {
+        if( stripped[property] && ('object' === typeof( stripped[property] ))) {
+            stripped[property] = stripDeep( stripped[property] )
         }
     }
     return rest;

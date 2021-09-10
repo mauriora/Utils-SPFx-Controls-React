@@ -35,7 +35,7 @@ export const ComboBoxListItemPicker: FunctionComponent<IComboBoxListItemPickerPr
             if (undefined !== items && undefined !== options) {
                 //if passed only ids
                 if (!isNaN(items[0])) {
-                    selectedItems = options.filter(opt => items.indexOf(opt.key) >= 0).map(item => item.key) as (string[] | number[]);
+                    selectedItems = options.filter(opt => items.includes(opt.key)).map(item => item.key) as (string[] | number[]);
                 } else {
                     selectedItems = options.filter(
                         option => items.some( item => item[keyColumnName] === option.key ) 
@@ -96,7 +96,7 @@ export const ComboBoxListItemPicker: FunctionComponent<IComboBoxListItemPickerPr
             onSelectedItem(newListItemSelection);
         };
 
-        const onChange = (e, option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any) => {
+        const onChange = (e: unknown, option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any) => {
             const newSelection = updateInternalSelection(option);
             updateListItemSelection(newSelection);
         };

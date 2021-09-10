@@ -2,32 +2,36 @@ import * as React from 'react';
 import { FunctionComponent, useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Image, Label, Link, Stack, TextField } from '@fluentui/react';
-import { IFieldInfo, Link as LinkItem, ListItemBase } from '@mauriora/controller-sharepoint-list';
-import { PropertyFieldProps } from './PropertyField';
+import { getDisplayFormat, IFieldInfo, Link as LinkItem, ListItemBase } from '@mauriora/controller-sharepoint-list';
+import { PropertyFieldFC } from './PropertyField';
 
 /**
  * Displays the image of a URL - Picture field
  */
-export const PictureField: FunctionComponent<{ item: ListItemBase, property: string }> = observer(({ item, property }) =>
-    item[property] &&
-    <Image
-        src={(item[property] as LinkItem).url}
-        alt={(item[property] as LinkItem).description}
-    />
-);
+export const PictureField: FunctionComponent<{ item: ListItemBase, property: string }> = observer(({ item, property }) => {
+    const link = (item as any)[property];
+    if (link instanceof LinkItem) {
+        return <Image
+            src={link.url}
+            alt={link.description}
+        />;
+    }
+});
 
 /**
  * Displays the Link of a URL - Hyperlink field
  */
-export const LinkField: FunctionComponent<{ info: IFieldInfo, item: ListItemBase, property: string }> = observer(({ info, item, property }) =>
-    item[property] &&
-    <Link
-        href={(item[property] as LinkItem).url}
-        placeholder={info.Description}
-    >
-        {((item[property] as LinkItem).description ?? (item[property] as LinkItem).url)}
-    </Link>
-);
+export const LinkField: FunctionComponent<{ info: IFieldInfo, item: ListItemBase, property: string }> = observer(({ info, item, property }) =>{
+    const link = (item as any)[property];
+    if (link instanceof LinkItem) {
+        return <Link
+            href={link.url}
+            placeholder={info.Description}
+        >
+            {(link.description ?? link.url)}
+        </Link>
+    }
+});
 
 const HTTPS = 'https://';
 
@@ -36,7 +40,7 @@ type KeysMatching<ClassOf, ValueTypeOf> = { [K in keyof ClassOf]-?: ClassOf[K] e
 /**
  * Displays a Url Field as Link or picture with edit fields with for link and description 
  * */
-export const UrlField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property, model }) => {
+export const UrlField: PropertyFieldFC = observer(({ info, item, property, model }) => {
     const link = useMemo(() => item[property] as LinkItem, [item[property]]);
 
     const onChange = useCallback(
@@ -44,7 +48,7 @@ export const UrlField: FunctionComponent<PropertyFieldProps> = observer(({ info,
             const linkItem = link ?? (newValue ? new LinkItem().init() : link);
             if (linkItem) {
                 switch (linkProperty) {
-                    case 'url': linkItem[linkProperty] = newValue && (! newValue.startsWith(HTTPS)) ? HTTPS + newValue : newValue;
+                    case 'url': linkItem[linkProperty] = newValue && (!newValue.startsWith(HTTPS)) ? HTTPS + newValue : newValue;
                         break;
                     default:
                         linkItem[linkProperty] = newValue;
@@ -53,7 +57,7 @@ export const UrlField: FunctionComponent<PropertyFieldProps> = observer(({ info,
             }
 
             if (!link && linkItem) {
-                item[property] = linkItem;
+                (item[property] as unknown) = linkItem;
             }
         },
         [link]
@@ -61,7 +65,7 @@ export const UrlField: FunctionComponent<PropertyFieldProps> = observer(({ info,
 
     return <Stack>
         <Label>{info.Title}</Label>
-        {1 === info['DisplayFormat'] ?
+        {1 === getDisplayFormat(info) ?
             <PictureField item={item} property={property} /> :
             <LinkField info={info} item={item} property={property} />
         }

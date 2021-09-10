@@ -6,4 +6,4 @@ export type ChangeCallBack = (targetProperty: string, selectedSites: ISite[] ) =
 
 export const createPropertyPaneSitePicker =
     (onChange: ChangeCallBack, targetProperty: string, props: Omit<ISitePickerProps, 'onChange'>) =>
-    new CustomPropertyPaneField(onChange, targetProperty, props, SitePicker);
+    new CustomPropertyPaneField(onChange as any, targetProperty, props, SitePicker);

@@ -136,7 +136,7 @@ const ExpandedCard: FunctionComponent<{ userClaims: string, userEmail: string }>
             } else {
                 // Properties are stored in inconvenient Key/Value pairs,
                 // so parse into an object called userProperties
-                newProfile.userProperties = newProfile.UserProfileProperties.reduce((res, prop) => {
+                newProfile.userProperties = (newProfile.UserProfileProperties as Array<{Key: string, Value: any}>).reduce((res: Record<string, any>, prop) => {
                     res[prop.Key] = prop.Value;
                     return res;
                 }, {});

@@ -2,24 +2,28 @@ import * as React from 'react';
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Dropdown, IDropdownOption, ComboBox, IComboBoxOption } from '@fluentui/react';
-import { PropertyFieldProps } from './PropertyField';
+import { PropertyFieldFC } from './PropertyField';
+import { getChoices, isFillInChoice } from "@mauriora/controller-sharepoint-list";
 
 
-export const ChoiceField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) => {
-    const choicesArray: Array<string> = info['Choices'];
+export const ChoiceField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const choicesArray: Array<string> = getChoices(info);
+    const value = item[property];
+
+    if(('string' !== typeof value) && ('undefined' !== typeof value) ) throw new TypeError(`ChoiceField(${property}) should be undefined or of type string, but it's of type ${typeof value}: ${String(value)}`);
 
     const [options, setOptions] = useState<Array<{ key: string, text: string }>>();
     const getOptions = useCallback(() =>
         [
             ...choicesArray.map(choiceText => ({ key: choiceText, text: choiceText })),
-            ...(item[property] && choicesArray.indexOf(item[property]) < 0 ? [{ key: item[property], text: item[property] }] : [])
+            ...(value && (! choicesArray.includes(value)) ? [{ key: value, text: value }] : [])
         ],
-        [choicesArray, item, property]
+        [choicesArray, item, property, value]
     );
 
     const onComboChange = useCallback(
         (e, selection?: IComboBoxOption, index?: number, value?: string) => {
-            item[property] = selection?.key ?? value;
+            (item[property] as unknown) = selection?.key ?? value;
             if (value) {
                 setOptions([...options, { key: value, text: value }]);
             }
@@ -32,7 +36,7 @@ export const ChoiceField: FunctionComponent<PropertyFieldProps> = observer(({ in
             const value = item[property];
 
             if (options && (! options.some(option => option.key === value))) {
-                setOptions([...options, { key: value, text: value }]);
+                setOptions([...options, { key: value as string, text: value as string }]);
             }
         },
         [item[property], item, property]
@@ -42,14 +46,14 @@ export const ChoiceField: FunctionComponent<PropertyFieldProps> = observer(({ in
     useEffect(() => setOptions(getOptions()), [item]);
     useEffect(updateOptions, [item[property]]);
 
-    return true === info['FillInChoice'] ?
+    return true === isFillInChoice( info ) ?
         <ComboBox
             allowFreeform
             label={info.Title}
             required={info.Required}
             disabled={info.ReadOnlyField}
             placeholder={info.Description}
-            selectedKey={item[property]}
+            selectedKey={item[property] as string}
             onChange={onComboChange}
             options={options}
         />
@@ -59,8 +63,8 @@ export const ChoiceField: FunctionComponent<PropertyFieldProps> = observer(({ in
             required={info.Required}
             disabled={info.ReadOnlyField}
             placeholder={info.Description}
-            selectedKey={item[property]}
-            onChange={(e, selection: IDropdownOption) => item[property] = selection.key}
+            selectedKey={item[property] as string}
+            onChange={(e, selection: IDropdownOption) => (item[property] as string | number) = selection.key}
             options={options}
         />;
 }

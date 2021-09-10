@@ -9,7 +9,7 @@ export const getAvatarUrl = (siteUrl: string, userEmail: string, size: 'S' | 'M'
     `${siteUrl}/_layouts/15/userphoto.aspx?size=${size}&username=${userEmail}`;
 
 export interface UserPersonaProps extends IPersonaProps {
-    user: UserInfoPartial;
+    user: UserInfoPartial & { picture?: string; };
 }
 
 export const getUserAvatarUrl = (user: UserLookup, size: 'S' | 'M' | 'L' | PersonaSize) => {

@@ -1,22 +1,21 @@
 import { IPersonaProps } from "@fluentui/react";
 import * as React from "react";
-import { FunctionComponent } from "react";
-import { PropertyFieldProps } from "./PropertyField";
+import { PropertyFieldFC } from './PropertyField';
 import { observer } from 'mobx-react-lite';
-import { personaProps2User, UserLookup, UserFull } from "@mauriora/controller-sharepoint-list";
+import { personaProps2User, UserLookup, UserFull, allowsMultipleValues } from "@mauriora/controller-sharepoint-list";
 import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 
 
 const userToSelectionUser = (user: Partial<UserFull>) => user.userName ?
-    user.userName : 
-    user.email ? 
+    user.userName :
+    user.email ?
         user.email :
-        user.imnName ? 
-            user.imnName : 
+        user.imnName ?
+            user.imnName :
             user.claims.split('|').pop();
 
-export const  UserField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) => {
-    const isMulti = info['AllowMultipleValues'] === true;
+export const UserField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const isMulti = allowsMultipleValues(info);
 
     const selectedUsers = item[property] === undefined ?
         new Array<string>() :
@@ -26,16 +25,20 @@ export const  UserField: FunctionComponent<PropertyFieldProps> = observer(({ inf
 
     const onChange = async (items: IPersonaProps[]) => {
         if (isMulti) {
-            const users = new Array<UserLookup>();
+            const users = item[property];
+
+            if (!Array.isArray(users)) throw new TypeError(`UserField([${item.id}].${property}).onChange allows multiple values and is not an array`);
+
             for (const persona of items) {
-                users.push(
-                    await personaProps2User(persona as any, info)
-                );
+                const user = await personaProps2User(persona as any, info);
+
+                if (! users.includes(user)) {
+                    users.push( user );
+                }
             }
-            item[property] = users;
         } else {
             const user = items.length ? await personaProps2User(items[0] as any, info) : undefined;
-            item[property] = user;
+            (item[property] as unknown) = user;
         }
     };
 

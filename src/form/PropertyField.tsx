@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import { ListItem, SharePointModel } from '@mauriora/controller-sharepoint-list';
+import { ListItem, SharePointModel, WritablePart } from '@mauriora/controller-sharepoint-list';
 import { FieldTypes, IFieldInfo } from '@pnp/sp/fields';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
@@ -12,14 +12,18 @@ import {
     UserField, LikesCountField
 } from '..';
 
-export interface PropertyFieldProps {
+
+
+export interface PropertyFieldProps<ItemType extends ListItem = ListItem> {
     info: IFieldInfo;
-    model: SharePointModel;
-    property: string;
-    item: ListItem;
+    model: SharePointModel<ItemType>;
+    property: keyof WritablePart<ItemType>;
+    item: ItemType;
 }
 
-export const PropertyField: FunctionComponent<PropertyFieldProps> = observer((props) => {
+export type PropertyFieldFC<ItemType extends ListItem = ListItem> = FunctionComponent<PropertyFieldProps<ItemType>>;
+
+export const PropertyField: PropertyFieldFC = observer((props) => {
     switch (props.info.FieldTypeKind) {
         case FieldTypes.Invalid:
             switch (props.info.TypeAsString) {

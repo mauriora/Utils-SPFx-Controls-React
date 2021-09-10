@@ -1,8 +1,9 @@
 import { ComboBox, Dropdown } from "@fluentui/react";
 import * as React from "react";
-import { FunctionComponent, useCallback, useEffect, useState } from "react";
-import { PropertyFieldProps } from "./PropertyField";
+import { useCallback, useEffect, useState } from "react";
+import { PropertyFieldFC } from './PropertyField';
 import { observer } from 'mobx-react-lite';
+import { getChoices, isFillInChoice } from "@mauriora/controller-sharepoint-list";
 
 interface GuiOptionItem {
     key: string | number;
@@ -11,27 +12,25 @@ interface GuiOptionItem {
 
 const string2Option = (text: string) => ({ key: text, text: text });
 
-export const MultiChoiceField: FunctionComponent<PropertyFieldProps> = observer(({ info, item, property }) => {
-    const choicesArray: Array<string> = info['Choices'];
+export const MultiChoiceField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const choicesArray: Array<string> = getChoices(info);
+    const chosen = item[property] ?? [];
+    if( ! Array.isArray(chosen) ) throw new TypeError(`MultiChoiceField: Property ${property} must be an array, its of type ${typeof chosen}`);
 
     const [options, setOptions] = useState<Array<{ key: string, text: string }>>();
 
     /** Map string options and fillin options to key/text pair */
-    const getOptions = useCallback(() =>
-        [
-            ...choicesArray.map(string2Option),
-            ...(item[property] ?? [])
-                .filter(fillIn => (!choicesArray.some(choiceKey => choiceKey === fillIn)))
-                .map(string2Option)
-        ],
-        [choicesArray, item, property]
+    const getOptions = useCallback(() => [
+                ...choicesArray.map(string2Option),
+                ...chosen
+                    .filter(fillIn => (!choicesArray.some(choiceKey => choiceKey === fillIn)))
+                    .map(string2Option)
+            ],
+        [choicesArray, chosen]
     );
 
     const onChange = useCallback(
         (e, selection?: GuiOptionItem, index?: number, value?: string) => {
-
-            const chosen = item[property];
-
             if (undefined !== value) {
                 chosen.push(value);
                 setOptions([...options, string2Option(value)]);
@@ -47,27 +46,25 @@ export const MultiChoiceField: FunctionComponent<PropertyFieldProps> = observer(
 
     const updateOptions = useCallback(
         () => {
-            /// Add freeForm values to option
-
-            if (options && item[property] && ((item[property]).some(fillIn => (! options.some( option => option.key === fillIn )) ) ) ) {
-                setOptions([...options, ...(item[property] ?? [])
+            if (options && chosen && (chosen.some(fillIn => (! options.some( option => option.key === fillIn )) ) ) ) {
+                setOptions([...options, ... chosen
                     .filter(fillIn => (!choicesArray.some(choiceKey => choiceKey === fillIn)))
                     .map(string2Option)]);
             }
         },
-        [options, item, property, ...(item[property] ?? [])]
+        [options, chosen]
     );
 
     useEffect(() => setOptions(getOptions()), [item]);
-    useEffect(updateOptions, [item[property], ...(item[property] ?? [])]);
+    useEffect(updateOptions, [item[property], ...(item[property] as [] ?? [])]);
 
-    if (options && item[property] && ((item[property]).some(fillIn => (! options.some( option => option.key === fillIn )) ) ) ) {
-        setOptions([...options, ...(item[property] ?? [])
+    if (options && item[property] && (chosen.some(fillIn => (! options.some( option => option.key === fillIn )) ) ) ) {
+        setOptions([...options, ...chosen
             .filter(fillIn => (!choicesArray.some(choiceKey => choiceKey === fillIn)))
             .map(string2Option)]);
     }
 
-    return true === info['FillInChoice'] ?
+    return true === isFillInChoice( info ) ?
         <ComboBox
             allowFreeform
             multiSelect
@@ -75,7 +72,7 @@ export const MultiChoiceField: FunctionComponent<PropertyFieldProps> = observer(
             required={info.Required}
             disabled={info.ReadOnlyField}
             placeholder={info.Description}
-            selectedKey={item[property] ? [...item[property]] : []}
+            selectedKey={[...chosen]}
             onChange={onChange}
             options={options}
         />
@@ -86,7 +83,7 @@ export const MultiChoiceField: FunctionComponent<PropertyFieldProps> = observer(
             required={info.Required}
             disabled={info.ReadOnlyField}
             placeholder={info.Description}
-            selectedKeys={item[property] ? [...item[property]] : []}
+            selectedKeys={[...chosen]}
             onChange={onChange}
             options={options}
         />;

@@ -7,7 +7,7 @@ import { clone, assign } from '@microsoft/sp-lodash-subset'
 import { useAsyncError } from '../hooks/AsyncError';
 
 export interface ItemFormProps {
-    model: SharePointModel;
+    model: SharePointModel<ListItem>;
     item: ListItem;
     saveButtonText: string;
     deleteButtonText: string;
@@ -18,10 +18,10 @@ export const ItemForm: FunctionComponent<ItemFormProps> = ({ model, item, cancel
 
     const throwError = useAsyncError();
     const [originalItemValues, setOriginalItemValues] = useState(clone(item));
-    const [fields, setFields] = useState(new Array<PropertyFieldProps>());
+    const [fields, setFields] = useState(new Array<PropertyFieldProps<ListItem>>());
 
     const loadFields = () => {
-        const newFields = new Array<PropertyFieldProps>();
+        const newFields = new Array<PropertyFieldProps<ListItem>>();
         if (model && item) {
             model.propertyFields.forEach(
                 (info, property) => {

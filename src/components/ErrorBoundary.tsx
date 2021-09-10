@@ -29,7 +29,7 @@ interface ErrorVariants {
 }
 
 export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
         this.state = { error: undefined, info: undefined };
     }
@@ -70,7 +70,7 @@ export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
     /** Return new state so the next render will show the fallback UI.  */
     static getDerivedStateFromError = (error: ErrorVariants): ErrorBoundaryState => ({ error, info: ErrorBoundary.parseError(error) });
 
-    componentDidCatch(error, errorInfo) {
+    componentDidCatch(error: unknown, errorInfo: unknown): void {
         // You can also log the error to an error reporting service
         console.error(`ErrorBoundary.componentDidCatch`, { error, errorInfo });
     }

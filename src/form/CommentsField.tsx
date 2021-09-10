@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { ActivityItem, HoverCard, HoverCardType, IconButton, IStackTokens, Link, mergeStyleSets, PersonaSize, Spinner, Stack, StackItem, Text, TextField } from '@fluentui/react';
 import { PropertyFieldProps } from './PropertyField';
@@ -124,17 +124,20 @@ const Comment: FunctionComponent<{ comment: ICommentInfo, commentedText: string,
     />
 };
 
-export interface CommentsFieldProps extends PropertyFieldProps {
+export interface CommentsFieldProps<T extends ListItem> extends PropertyFieldProps<T> {
     newCommentPlaceholder?: string;
     commentedText: string;
 };
+
+export type CommentsFieldFC<ItemType extends ListItem = ListItem> = FunctionComponent<CommentsFieldProps<ItemType>>;
+
 
 const commentStackTokens: IStackTokens = {
     childrenGap: 's1',
     padding: 's1',
 };
 
-export const CommentsField: FunctionComponent<CommentsFieldProps> = observer(({ item, newCommentPlaceholder, commentedText }) => {
+export const CommentsField: CommentsFieldFC = observer(({ item, newCommentPlaceholder, commentedText }) => {
     const [updating, setUpdating] = useState(true);
     const [comments, setComments] = useState(new Array<ICommentInfo>());
 

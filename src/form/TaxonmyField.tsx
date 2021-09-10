@@ -1,8 +1,8 @@
 import * as React from "react";
-import { FunctionComponent, useCallback } from "react";
+import { FunctionComponent, useCallback, useMemo } from "react";
 import { PropertyFieldProps } from "./PropertyField";
 import { observer } from 'mobx-react-lite';
-import { MetaTerm } from "@mauriora/controller-sharepoint-list";
+import { allowsMultipleValues, MetaTerm, hasTermSetId, getTermSetId, isKeyword } from "@mauriora/controller-sharepoint-list";
 import { EmptyGuid, IPickerTerm, IPickerTerms, TaxonomyPicker } from "@pnp/spfx-controls-react";
 
 export const REPLACE_TAG = '*TAXONOMY-REPLACE-TAG*';
@@ -23,19 +23,29 @@ export interface TaxonmyFieldProps extends PropertyFieldProps {
 }
 
 export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ info, item, property, onGetErrorMessage }) => {
-    const isKeywordField = true === info['IsKeyword'];
+    const allowMultiple = useMemo(() => allowsMultipleValues(info), [info]);
+    const propertyValue = item[property];
+
+    if( allowMultiple && (! Array.isArray(propertyValue) ) ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) allows multiple values but is not an array`);
+    if( (!allowMultiple) && (undefined !== propertyValue && (! (propertyValue instanceof MetaTerm)) ) ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) should be undefined or an instance of MetaTerm`);
+
+    const isKeywordField = isKeyword( info );
     const onChange = (newValue: IPickerTerms) => {
         const newTerms = newValue.map(term => ({ label: term.name, termGuid: term.key }));
-        item[property] = info['AllowMultipleValues'] ?
+        (item[property] as unknown) = allowMultiple ?
             newTerms : newTerms[0];
     };
 
-    const terms = item[property] ?
-        (info['AllowMultipleValues'] ?
-            item[property].map((term: MetaTerm) => ({ name: term.label, key: term.termGuid })) :
-            [{ name: item[property].label, key: item[property].termGuid }]
-        ) :
-        [];
+    const terms = new Array();
+    
+    if(Array.isArray(propertyValue)) {
+        terms.push(
+            ...propertyValue.map(
+                (term: MetaTerm) => ({ name: term.label, key: term.termGuid }))
+        );
+    } else if(propertyValue instanceof MetaTerm) {
+        terms.push({ name: propertyValue.label, key: propertyValue.termGuid });
+    }
 
     const onNewKeyWord = useCallback(
         async (value: IPickerTerm): Promise<void> => {
@@ -46,20 +56,20 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
                 term.termGuid= value.key;
                 term.wssId = -1;
 
-                if(! item[property]) {
-                    console.error(`TaxonmyField.onNewKeyWord: ARRAYS SHOULD BE INITIALISED`);
-                    item[property] = new Array<MetaTerm>();
+                if(Array.isArray(propertyValue)) {
+                    propertyValue.push( term );
+                } else if(propertyValue instanceof MetaTerm) {
+                    (item[property] as unknown) = term;
                 }
-                (item[property] as Array<MetaTerm>).push( term );
             } else {
-                console.error(`TaxonmyField.onNewKeyWord(${item.id}.${property}) name=${value[0]?.name} TermSetId=${info['TermSetId']}`, { value: value ? {...value} : value, termsNow: item[property] ? [...item[property]] : item[property], item, info });
+                console.error(`TaxonmyField.onNewKeyWord(${item.id}.${property}) allowMultiple=${allowMultiple} TermSetId=${getTermSetId(info)}`, { value: value ? {...value} : value, propertyValueNow: Array.isArray( propertyValue ) ? [...propertyValue] : propertyValue, item, info });
             }
         },
         [item, property]
     );
 
     return <TaxonomyPicker
-        allowMultipleSelections={info['AllowMultipleValues']}
+        allowMultipleSelections={allowMultiple}
         label={info.Title}
         required={info.Required}
         initialValues={terms}
@@ -67,7 +77,7 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
         validateInput
         onGetErrorMessage={onGetErrorMessage}
         onNewTerm={isKeywordField ? onNewKeyWord : undefined}
-        termsetNameOrID={info['TermSetId']}
+        termsetNameOrID={getTermSetId(info)}
         panelTitle="Select Term"
         context={item.controller.context}
         onChange={onChange}
