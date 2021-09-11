@@ -2,7 +2,7 @@ import { IPersonaProps } from "@fluentui/react";
 import * as React from "react";
 import { PropertyFieldFC } from './PropertyField';
 import { observer } from 'mobx-react-lite';
-import { personaProps2User, UserLookup, UserFull, allowsMultipleValues } from "@mauriora/controller-sharepoint-list";
+import { personaProps2User, UserFull, allowsMultipleValues } from "@mauriora/controller-sharepoint-list";
 import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 
 
@@ -30,14 +30,14 @@ export const UserField: PropertyFieldFC = observer(({ info, item, property }) =>
             if (!Array.isArray(users)) throw new TypeError(`UserField([${item.id}].${property}).onChange allows multiple values and is not an array`);
 
             for (const persona of items) {
-                const user = await personaProps2User(persona as any, info);
+                const user = await personaProps2User(persona, info);
 
                 if (! users.includes(user)) {
                     users.push( user );
                 }
             }
         } else {
-            const user = items.length ? await personaProps2User(items[0] as any, info) : undefined;
+            const user = items.length ? await personaProps2User(items[0], info) : undefined;
             item[property] = user;
         }
     };

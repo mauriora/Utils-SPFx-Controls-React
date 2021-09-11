@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { FunctionComponent, useCallback } from 'react';
+import { FunctionComponent } from 'react';
 import { observer } from 'mobx-react-lite';
-import { ITextFieldStyles, mergeStyles, TextField } from '@fluentui/react';
+import { ITextFieldStyles, TextField } from '@fluentui/react';
 import { PropertyFieldProps } from './PropertyField';
 
 export interface LikesCountFieldProps extends PropertyFieldProps {
     mini?: boolean;
-};
+}
 
 const transparentFieldStyles: Partial<ITextFieldStyles> = { 
     fieldGroup: {

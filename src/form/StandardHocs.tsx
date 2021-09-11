@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
-import { TextField as FluentTextField, Checkbox, Rating, SpinButton, Link } from '@fluentui/react';
+import { TextField as FluentTextField, Checkbox, SpinButton } from '@fluentui/react';
 import { PropertyFieldFC } from './PropertyField';
 import { getMaximumValue, getMinimumValue } from '@mauriora/controller-sharepoint-list';
+import { useMemo } from 'react';
 
 export const RatingCountField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
@@ -49,18 +50,25 @@ export const CurrencyField: PropertyFieldFC = observer(({ info, item, property }
 
 export const NumberField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
+    const minimum = useMemo(() => getMinimumValue( info ), [info]);
+    const maximum = useMemo(() => getMaximumValue( info ), [info]);
+
     if(typeof value !== 'number') throw new Error(`NumberField: Property '${property}' is not a string it's ${typeof value}`);
+    if(false === minimum) throw new Error(`NumberField: Property '${property}' can't get minimum value`);
+    if(false === maximum) throw new Error(`NumberField: Property '${property}' can't get maximum value`);
+
+    const step = maximum == Number.MAX_VALUE ? 1 : maximum / 100;
 
     return <SpinButton
         label={info.Title}
         value={value as unknown as string}
         disabled={info.ReadOnlyField}
         placeholder={info.Description}
-        min={getMinimumValue( info ) == Number.MIN_VALUE ? 0 : getMinimumValue( info )}
-        max={getMaximumValue( info ) == Number.MAX_VALUE ? 100 : getMaximumValue( info )}
-        step={getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}
-        incrementButtonAriaLabel={`Increase value by ${getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}`}
-        decrementButtonAriaLabel={`Decrease value by ${getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}`}
+        min={ minimum == Number.MIN_VALUE ? 0 : minimum}
+        max={ maximum == Number.MAX_VALUE ? 100 : maximum}
+        step={step}
+        incrementButtonAriaLabel={`Increase value by ${step}`}
+        decrementButtonAriaLabel={`Decrease value by ${step}`}
         onChange={(e, newValue: string) => item[property] = Number(newValue)}
     />
 });

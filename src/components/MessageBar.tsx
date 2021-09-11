@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FunctionComponent } from "react";
-import { MessageBar, MessageBarType, Link } from '@fluentui/react'
+import { MessageBar, MessageBarType } from '@fluentui/react'
 
 export interface ErrorBarProps {
     message: string;

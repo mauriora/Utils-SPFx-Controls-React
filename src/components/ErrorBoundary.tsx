@@ -28,8 +28,8 @@ interface ErrorVariants {
 
 }
 
-export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
-    constructor(props: {}) {
+export class ErrorBoundary extends React.Component<unknown, ErrorBoundaryState> {
+    constructor(props: unknown) {
         super(props);
         this.state = { error: undefined, info: undefined };
     }
@@ -47,7 +47,7 @@ export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
         }
     }
 
-    static parseError = (error: ErrorVariants) => {
+    static parseError = (error: ErrorVariants): ErrorInfo => {
         const info: ErrorInfo = { title: String(error.message ?? error) };
 
         if ('string' === typeof (error.message) && (error.message.search(/\{.*\}/)) >= 0) {
@@ -75,15 +75,15 @@ export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
         console.error(`ErrorBoundary.componentDidCatch`, { error, errorInfo });
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         window.addEventListener('unhandledrejection', this.promiseRejectionHandler)
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         window.removeEventListener('unhandledrejection', this.promiseRejectionHandler);
     }
 
-    render() {
+    render(): React.ReactNode {
         if (this.state.error) {
             return <ErrorBar
                 message={`${String(this.state.info.title ?? this.state.error + (this.state.info.description ? ': ' + this.state.info.description : ''))}`}

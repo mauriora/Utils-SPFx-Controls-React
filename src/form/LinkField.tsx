@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FunctionComponent, useCallback, useMemo } from 'react';
+import { FunctionComponent, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Image, Label, Link, Stack, TextField } from '@fluentui/react';
 import { getDisplayFormat, IFieldInfo, Link as LinkItem, ListItemBase } from '@mauriora/controller-sharepoint-list';
@@ -40,19 +40,22 @@ type KeysMatching<ClassOf, ValueTypeOf> = { [K in keyof ClassOf]-?: ClassOf[K] e
 /**
  * Displays a Url Field as Link or picture with edit fields with for link and description 
  * */
-export const UrlField: PropertyFieldFC = observer(({ info, item, property, model }) => {
-    const link = useMemo(() => item[property] as LinkItem, [item[property]]);
+export const UrlField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const link = item[property];
+
+    if( undefined !== link && (! (link instanceof LinkItem))) throw new TypeError(`UrlField(${property}) is not undefined and not a Link instance, it's of type ${typeof link} constructor.name=$${link?.constructor?.name}`);
 
     const onChange = useCallback(
-        (linkProperty: KeysMatching<LinkItem, string>, newValue: string) => {
+        (linkProperty: 'url' | 'description', newValue: string) => {
             const linkItem = link ?? (newValue ? new LinkItem().init() : link);
             if (linkItem) {
                 switch (linkProperty) {
                     case 'url': linkItem[linkProperty] = newValue && (!newValue.startsWith(HTTPS)) ? HTTPS + newValue : newValue;
                         break;
-                    case 'title': linkItem[linkProperty] = newValue;
+                    case 'description': linkItem[linkProperty] = newValue;
+                    break;
                     default:
-                        throw new Error(`UrlField[${property}]: '${linkProperty}' must be 'url' or 'title'`);
+                        throw new Error(`UrlField[${property}]: '${linkProperty}' must be 'url' or 'description'`);
                 }
             }
 

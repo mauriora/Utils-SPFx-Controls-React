@@ -96,7 +96,7 @@ export const ComboBoxListItemPicker: FunctionComponent<IComboBoxListItemPickerPr
             onSelectedItem(newListItemSelection);
         };
 
-        const onChange = (e: unknown, option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any) => {
+        const onChange = (e: unknown, option?: IComboBoxOption) => {
             const newSelection = updateInternalSelection(option);
             updateListItemSelection(newSelection);
         };

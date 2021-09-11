@@ -19,11 +19,11 @@ export interface ListTableProps {
 
 
 interface TextFieldRenderProps {
-    item: any;
+    item: Record<string, unknown>;
     property: string;
 }
 
-const TextFieldRender = observer(({ item, property }: TextFieldRenderProps) => (<FieldTextRenderer text={item[property]} />));
+const TextFieldRender = observer(({ item, property }: TextFieldRenderProps) => (<FieldTextRenderer text={item[property] as string} />));
 
 const stripDeep = ({ controller, pnpItem, delete: fDelete, setController, source, ...rest}: Controller.ListItemBase) => {
     const stripped = rest as any;
@@ -62,7 +62,7 @@ export const ItemsList: FunctionComponent<ListTableProps> = observer(({ model, o
                     break;
                 case 'MultiChoice':
                     viewField.render = (item) => {
-                        const titleFieldRegEx = new RegExp('^' + propertyName + '\.([0-9]+)' + '$');
+                        const titleFieldRegEx = new RegExp('^' + propertyName + '.([0-9]+)' + '$');
                         let resultString = '';
                         for (const flatPropertyName in item) {
                             if (titleFieldRegEx.test(flatPropertyName)) {
@@ -78,7 +78,7 @@ export const ItemsList: FunctionComponent<ListTableProps> = observer(({ model, o
                     break;
                 case 'LookupMulti':
                     viewField.render = (item) => {
-                        const titleFieldRegEx = new RegExp('^' + propertyName + '\.([0-9]+)\.' + 'title' + '$');
+                        const titleFieldRegEx = new RegExp('^' + propertyName + '.([0-9]+).' + 'title' + '$');
                         let resultString = '';
                         for (const flatPropertyName in item) {
                             if (titleFieldRegEx.test(flatPropertyName)) {

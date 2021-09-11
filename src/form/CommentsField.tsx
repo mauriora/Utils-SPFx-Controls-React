@@ -89,7 +89,7 @@ const isNotToday = (someDate: Date) => {
         someDate.getFullYear() != today.getFullYear();
 }
 
-const Comment: FunctionComponent<{ comment: ICommentInfo, commentedText: string, siteUrl: string }> = ({ comment, commentedText, siteUrl }) => {
+const Comment: FunctionComponent<{ comment: ICommentInfo, commentedText: string, siteUrl: string }> = ({ comment, commentedText }) => {
     const dateObject = useMemo(() => new Date(comment.createdDate), [comment]);
     const isNotFromToday = useMemo(() => isNotToday(dateObject), [dateObject]);
     const timeString = useMemo(() => dateObject.toLocaleTimeString(), [dateObject]);
@@ -127,7 +127,7 @@ const Comment: FunctionComponent<{ comment: ICommentInfo, commentedText: string,
 export interface CommentsFieldProps<T extends ListItem> extends PropertyFieldProps<T> {
     newCommentPlaceholder?: string;
     commentedText: string;
-};
+}
 
 export type CommentsFieldFC<ItemType extends ListItem = ListItem> = FunctionComponent<CommentsFieldProps<ItemType>>;
 
@@ -170,7 +170,7 @@ export const CommentsField: CommentsFieldFC = observer(({ item, newCommentPlaceh
                     </ErrorBoundary>
                 </StackItem>
                 {comments.map(comment =>
-                    <StackItem>
+                    <StackItem key={`comment-${comment.id}-stack-item`}>
                         <Comment siteUrl={item.controller.site.url} comment={comment} commentedText={commentedText} />
                     </StackItem>
                 )}

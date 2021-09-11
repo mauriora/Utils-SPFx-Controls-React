@@ -13,9 +13,12 @@ interface GuiOptionItem {
 const string2Option = (text: string) => ({ key: text, text: text });
 
 export const MultiChoiceField: PropertyFieldFC = observer(({ info, item, property }) => {
-    const choicesArray: Array<string> = getChoices(info);
+    const choicesArray: Array<string> | false = getChoices(info);
     const chosen = item[property] ?? [];
+
+    if( ! choicesArray ) throw new TypeError(`ChoiceField(${property}) has no choices`);
     if( ! Array.isArray(chosen) ) throw new TypeError(`MultiChoiceField: Property ${property} must be an array, its of type ${typeof chosen}`);
+
 
     const [options, setOptions] = useState<Array<{ key: string, text: string }>>();
 
@@ -41,7 +44,7 @@ export const MultiChoiceField: PropertyFieldFC = observer(({ info, item, propert
                 chosen.splice(index, 1);
             }
         },
-        [item[property], item, property, options]
+        [chosen, item, property, options]
     );
 
     const updateOptions = useCallback(
@@ -56,9 +59,9 @@ export const MultiChoiceField: PropertyFieldFC = observer(({ info, item, propert
     );
 
     useEffect(() => setOptions(getOptions()), [item]);
-    useEffect(updateOptions, [item[property], ...(item[property] ?? [])]);
+    useEffect(updateOptions, [chosen, chosen.length]);
 
-    if (options && item[property] && (chosen.some(fillIn => (! options.some( option => option.key === fillIn )) ) ) ) {
+    if (options && chosen && (chosen.some(fillIn => (! options.some( option => option.key === fillIn )) ) ) ) {
         setOptions([...options, ...chosen
             .filter(fillIn => (!choicesArray.some(choiceKey => choiceKey === fillIn)))
             .map(string2Option)]);

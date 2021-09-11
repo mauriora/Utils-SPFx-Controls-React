@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FunctionComponent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Dropdown, IDropdownOption, ComboBox, IComboBoxOption } from '@fluentui/react';
 import { PropertyFieldFC } from './PropertyField';
@@ -7,10 +7,11 @@ import { getChoices, isFillInChoice } from "@mauriora/controller-sharepoint-list
 
 
 export const ChoiceField: PropertyFieldFC = observer(({ info, item, property }) => {
-    const choicesArray: Array<string> = getChoices(info);
+    const choicesArray: Array<string> | false = getChoices(info);
     const value = item[property];
 
     if(('string' !== typeof value) && ('undefined' !== typeof value) ) throw new TypeError(`ChoiceField(${property}) should be undefined or of type string, but it's of type ${typeof value}: ${String(value)}`);
+    if( ! choicesArray ) throw new TypeError(`ChoiceField(${property}) has no choices`);
 
     const [options, setOptions] = useState<Array<{ key: string, text: string }>>();
     const getOptions = useCallback(() =>
@@ -33,18 +34,16 @@ export const ChoiceField: PropertyFieldFC = observer(({ info, item, property }) 
 
     const updateOptions = useCallback(
         () => {
-            const value = item[property];
-
             if (options && (! options.some(option => option.key === value))) {
                 setOptions([...options, { key: value, text: value }]);
             }
         },
-        [item[property], item, property]
+        [value, item, property]
     );
 
 
     useEffect(() => setOptions(getOptions()), [item]);
-    useEffect(updateOptions, [item[property]]);
+    useEffect(updateOptions, [value]);
 
     return true === isFillInChoice( info ) ?
         <ComboBox

@@ -3,16 +3,16 @@ import { observer } from "mobx-react-lite";
 import * as React from "react";
 import { FunctionComponent, useMemo } from "react";
 import { UserLookup } from "@mauriora/controller-sharePoint-list";
-import { init, UserInfoPartial } from "../tools/UserInfo";
+import { UserInfoPartial } from "../tools/UserInfo";
 
-export const getAvatarUrl = (siteUrl: string, userEmail: string, size: 'S' | 'M' | 'L' = 'L') =>
+export const getAvatarUrl = (siteUrl: string, userEmail: string, size: 'S' | 'M' | 'L' = 'L'): string =>
     `${siteUrl}/_layouts/15/userphoto.aspx?size=${size}&username=${userEmail}`;
 
 export interface UserPersonaProps extends IPersonaProps {
     user: UserInfoPartial & { picture?: string; };
 }
 
-export const getUserAvatarUrl = (user: UserLookup, size: 'S' | 'M' | 'L' | PersonaSize) => {
+export const getUserAvatarUrl = (user: UserLookup, size: 'S' | 'M' | 'L' | PersonaSize): string => {
     const email = user?.claims?.split('|').pop();
     const letterSize: 'S' | 'M' | 'L' = 'number' === typeof (size) ?
         (undefined === size ?
@@ -33,8 +33,6 @@ export const getUserAvatarUrl = (user: UserLookup, size: 'S' | 'M' | 'L' | Perso
 
 export const UserPersona: FunctionComponent<UserPersonaProps> = observer(
     ({ user, imageUrl, ...props }) => {
-        const fullUser = useMemo( () => init(user), [user] );
-
         const avatarUrl = useMemo(
             ///TODO: Should check if is User for picture
             () => imageUrl ?? user['picture'] ?? 

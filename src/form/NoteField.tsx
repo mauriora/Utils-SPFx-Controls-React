@@ -3,7 +3,7 @@ import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 import * as React from "react";
 import { PropertyFieldFC } from './PropertyField';
 import { observer } from 'mobx-react-lite';
-import { isRichtText, ListItem } from "@mauriora/controller-sharepoint-list";
+import { isRichtText } from "@mauriora/controller-sharepoint-list";
 
 
 export const  NoteField: PropertyFieldFC = observer(({ info, item, property }) => true === isRichtText( info ) ?

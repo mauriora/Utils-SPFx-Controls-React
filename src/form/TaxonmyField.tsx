@@ -2,7 +2,7 @@ import * as React from "react";
 import { FunctionComponent, useCallback, useMemo } from "react";
 import { PropertyFieldProps } from "./PropertyField";
 import { observer } from 'mobx-react-lite';
-import { allowsMultipleValues, MetaTerm, hasTermSetId, getTermSetId, isKeyword } from "@mauriora/controller-sharepoint-list";
+import { allowsMultipleValues, MetaTerm, getTermSetId, isKeyword } from "@mauriora/controller-sharepoint-list";
 import { EmptyGuid, IPickerTerm, IPickerTerms, TaxonomyPicker } from "@pnp/spfx-controls-react";
 
 export const REPLACE_TAG = '*TAXONOMY-REPLACE-TAG*';
@@ -24,8 +24,11 @@ export interface TaxonmyFieldProps extends PropertyFieldProps {
 
 export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ info, item, property, onGetErrorMessage }) => {
     const allowMultiple = useMemo(() => allowsMultipleValues(info), [info]);
+    const termSetId = useMemo( () => getTermSetId(info), [info]);
+
     const propertyValue = item[property];
 
+    if( false === termSetId ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) can't get termset id`);
     if( allowMultiple && (! Array.isArray(propertyValue) ) ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) allows multiple values but is not an array`);
     if( (!allowMultiple) && (undefined !== propertyValue && (! (propertyValue instanceof MetaTerm)) ) ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) should be undefined or an instance of MetaTerm`);
 
@@ -36,15 +39,15 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
             newTerms : newTerms[0];
     };
 
-    const terms = new Array();
+    const terms = new Array<IPickerTerm>();
     
     if(Array.isArray(propertyValue)) {
         terms.push(
             ...propertyValue.map(
-                (term: MetaTerm) => ({ name: term.label, key: term.termGuid }))
+                (term: MetaTerm) => ({ name: term.label, key: term.termGuid, termSet: termSetId, path: undefined }))
         );
     } else if(propertyValue instanceof MetaTerm) {
-        terms.push({ name: propertyValue.label, key: propertyValue.termGuid });
+        terms.push({ name: propertyValue.label, key: propertyValue.termGuid, termSet: termSetId, path: undefined });
     }
 
     const onNewKeyWord = useCallback(
@@ -77,7 +80,7 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
         validateInput
         onGetErrorMessage={onGetErrorMessage}
         onNewTerm={isKeywordField ? onNewKeyWord : undefined}
-        termsetNameOrID={getTermSetId(info)}
+        termsetNameOrID={termSetId}
         panelTitle="Select Term"
         context={item.controller.context}
         onChange={onChange}

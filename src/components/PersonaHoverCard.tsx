@@ -11,7 +11,7 @@ import {
     Spinner,
     Stack,
     StackItem,
-    Text 
+    Text
 } from "@fluentui/react";
 import * as React from "react";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
@@ -129,19 +129,24 @@ const ExpandedCard: FunctionComponent<{ userClaims: string, userEmail: string }>
 
     const loadProfile = useCallback(
         async () => {
-            const newProfile = await sp.profiles.getPropertiesFor(userClaims);
+            try {
+                const newProfile = await sp.profiles.getPropertiesFor(userClaims);
 
-            if (!newProfile?.UserProfileProperties) {
-                console.error(`PersonaHoverCard.ExpandedCard: Can't get profile for userClaims=${userClaims}`, { newProfile, userClaims });
-            } else {
-                // Properties are stored in inconvenient Key/Value pairs,
-                // so parse into an object called userProperties
-                newProfile.userProperties = (newProfile.UserProfileProperties as Array<{Key: string, Value: any}>).reduce((res: Record<string, any>, prop) => {
-                    res[prop.Key] = prop.Value;
-                    return res;
-                }, {});
+                if (!newProfile?.UserProfileProperties) {
+                    console.error(`PersonaHoverCard.ExpandedCard: Can't get profile for userClaims=${userClaims}`, { newProfile, userClaims });
+                } else {
+                    // Properties are stored in inconvenient Key/Value pairs,
+                    // so parse into an object called userProperties
+                    newProfile.userProperties = (newProfile.UserProfileProperties as Array<{ Key: string, Value: unknown }>).reduce((res: Record<string, unknown>, prop) => {
+                        res[prop.Key] = prop.Value;
+                        return res;
+                    }, {});
 
-                setProfile(newProfile);
+                    setProfile(newProfile);
+                }
+            } catch (getProfileError) {
+                console.error(`PersonaHoverCard.ExpandedCard.loadProfile: can't get Properties for ${userClaims}`, getProfileError);
+                throwAsync(getProfileError);
             }
         },
         [userClaims]
@@ -152,14 +157,14 @@ const ExpandedCard: FunctionComponent<{ userClaims: string, userEmail: string }>
             try {
                 const graphProfile = await getUser(userEmail);
 
-                if(graphProfile){
-                    setGraphProfile( graphProfile);
+                if (graphProfile) {
+                    setGraphProfile(graphProfile);
                 } else {
                     console.error(`PersonaHoverCard.ExpandedCard.loadGraphUser: can't get graph profile for ${userEmail}`);
                 }
             } catch (getGraphError) {
                 console.error(`PersonaHoverCard.ExpandedCard.loadGraphUser: can't get graph profile for ${userEmail}`, getGraphError);
-                //  throwAsync(getGraphError);
+                throwAsync(getGraphError);
             }
         },
         [userEmail]

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FunctionComponent, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { PropertyFieldFC } from './PropertyField';
 import { allowsMultipleValues, getById, getLookupList, ListItemBase, SharePointContext } from '@mauriora/controller-sharepoint-list';
@@ -7,6 +6,7 @@ import { Label, Stack } from '@fluentui/react';
 // import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react';
 import { ComboBoxListItemPicker } from './SpfxControlsFix/ComboBoxListItemPicker';
 import { classToPlain } from 'class-transformer';
+import { useMemo } from 'react';
 
 interface Lookup {
     ID: number;
@@ -15,6 +15,9 @@ interface Lookup {
 
 export const  LookupComboBoxField: PropertyFieldFC = observer(({ info, item, property }) => {
     const isMulti = allowsMultipleValues(info);
+    const lookUpListId = useMemo(() => getLookupList( info ), [info]);
+    if(! lookUpListId ) throw new Error(`LookupComboBoxField.lookupTolistItemBase: can't get lookup list id`);
+
     let selectedItems: Array<Lookup> = undefined;
 
     if (undefined === item[property]) {
@@ -31,10 +34,10 @@ export const  LookupComboBoxField: PropertyFieldFC = observer(({ info, item, pro
     }
 
     const lookupTolistItemBase = async (lookup: Lookup): Promise<ListItemBase> => {
-        const listItem = new ListItemBase().init();
+        const listItem = new ListItemBase().init();        
         listItem.id = lookup.ID;
         listItem.title = lookup.Title;
-        const lookUpListId = getLookupList( info );
+
         const controller = getById(lookUpListId);
         const controllerItem = await controller.addGetPartial(listItem);
         return controllerItem;
@@ -57,7 +60,7 @@ export const  LookupComboBoxField: PropertyFieldFC = observer(({ info, item, pro
     return <Stack>
         <Label>{info.Title}</Label>
         <ComboBoxListItemPicker
-            listId={getLookupList( info )}
+            listId={lookUpListId}
             keyColumnInternalName='ID'
             columnInternalName='Title'
             webUrl={(item.controller.context as SharePointContext).pageContext.web.absoluteUrl}

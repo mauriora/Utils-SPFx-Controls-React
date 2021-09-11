@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { FunctionComponent } from 'react';
 import { observer } from 'mobx-react-lite';
 import { PropertyFieldFC } from './PropertyField';
 import { allowsMultipleValues, getById, getLookupList, ListItemBase } from '@mauriora/controller-sharepoint-list';
 import { Label, Stack } from '@fluentui/react';
 import { ListItemPicker } from '@pnp/spfx-controls-react';
+import { useMemo } from 'react';
 
 interface LookupKeyName {
     key: string;
@@ -14,6 +14,9 @@ interface LookupKeyName {
 const listItemBaseToLookupKeyName = (item: ListItemBase): LookupKeyName => (item === undefined ? undefined : { key: item.id === undefined ? undefined : item.id.toFixed(), name: item.title });
 
 export const  LookupField: PropertyFieldFC = observer(({ info, item, property }) => {
+    const lookUpListId = useMemo(() => getLookupList( info ), [info]);
+    if(! lookUpListId ) throw new Error(`LookupComboBoxField.lookupTolistItemBase: can't get lookup list id`);
+
     const isMulti = allowsMultipleValues(info);
     let selectedItems: Array<LookupKeyName> = undefined;
 
@@ -31,7 +34,6 @@ export const  LookupField: PropertyFieldFC = observer(({ info, item, property })
         const listItem = new ListItemBase();
         listItem.id = Number(lookup.key);
         listItem.title = lookup.name;
-        const lookUpListId = getLookupList( info );
         const controller = getById(lookUpListId);
         const controllerItem = await controller.addGetPartial(listItem);
         return controllerItem;
@@ -55,7 +57,7 @@ export const  LookupField: PropertyFieldFC = observer(({ info, item, property })
     return <Stack>
         <Label>{info.Title}</Label>
         <ListItemPicker
-            listId={getLookupList( info )}
+            listId={lookUpListId}
 
             /** InternalName of column to use as the key for the selection. Must be a column with unique values. Default: Id */
             keyColumnInternalName='Id'
