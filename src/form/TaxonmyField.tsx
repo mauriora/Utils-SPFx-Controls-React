@@ -32,7 +32,7 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
     const isKeywordField = isKeyword( info );
     const onChange = (newValue: IPickerTerms) => {
         const newTerms = newValue.map(term => ({ label: term.name, termGuid: term.key }));
-        (item[property] as unknown) = allowMultiple ?
+        item[property] = allowMultiple ?
             newTerms : newTerms[0];
     };
 
@@ -59,7 +59,7 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
                 if(Array.isArray(propertyValue)) {
                     propertyValue.push( term );
                 } else if(propertyValue instanceof MetaTerm) {
-                    (item[property] as unknown) = term;
+                    item[property] = term;
                 }
             } else {
                 console.error(`TaxonmyField.onNewKeyWord(${item.id}.${property}) allowMultiple=${allowMultiple} TermSetId=${getTermSetId(info)}`, { value: value ? {...value} : value, propertyValueNow: Array.isArray( propertyValue ) ? [...propertyValue] : propertyValue, item, info });

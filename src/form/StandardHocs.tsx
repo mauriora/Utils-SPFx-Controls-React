@@ -27,7 +27,7 @@ export const BooleanField: PropertyFieldFC = observer(({ info, item, property })
         label={info.Title}
         checked={value}
         disabled={info.ReadOnlyField}
-        onChange={(e, checked) => (item[property] as unknown) = checked}
+        onChange={(e, checked) => item[property] = checked}
     />
 });
 
@@ -43,7 +43,7 @@ export const CurrencyField: PropertyFieldFC = observer(({ info, item, property }
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
         prefix={'$'}
-        onChange={(e, newValue) => (item[property] as unknown) = Number(newValue)}
+        onChange={(e, newValue) => item[property] = Number(newValue)}
     />
 });
 
@@ -61,7 +61,7 @@ export const NumberField: PropertyFieldFC = observer(({ info, item, property }) 
         step={getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}
         incrementButtonAriaLabel={`Increase value by ${getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}`}
         decrementButtonAriaLabel={`Decrease value by ${getMaximumValue( info ) == Number.MAX_VALUE ? 1 : getMaximumValue( info ) / 100}`}
-        onChange={(e, newValue: string) => (item[property] as unknown) = Number(newValue)}
+        onChange={(e, newValue: string) => item[property] = Number(newValue)}
     />
 });
 
@@ -75,7 +75,7 @@ export const TextField: PropertyFieldFC = observer(({ info, item, property }) =>
         required={info.Required}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
-        onChange={(e, newValue) => (item[property] as unknown) = newValue}
+        onChange={(e, newValue) => item[property] = newValue}
     />
 });
 
@@ -90,7 +90,7 @@ export const CounterField: PropertyFieldFC = observer(({ info, item, property })
         required={info.Required}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
-        onChange={(e, newValue) => (item[property] as unknown) = Number(newValue)}
+        onChange={(e, newValue) => item[property] = Number(newValue)}
     />
 });
 

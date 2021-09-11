@@ -17,7 +17,7 @@ export const DateTimeField: PropertyFieldFC = observer(({ info, item, property }
             disabled={info.ReadOnlyField}
             placeholder={info.Description}
             value={item[property] ? new Date(value) : undefined}
-            onSelectDate={(newDate) => (item[property] as unknown) = newDate.toISOString()}
+            onSelectDate={(newDate) => item[property] = newDate.toISOString()}
         />;
     } else {
         return <DateTimePicker
@@ -25,6 +25,6 @@ export const DateTimeField: PropertyFieldFC = observer(({ info, item, property }
             disabled={info.ReadOnlyField}
             placeholder={info.Description}
             value={item[property] ? new Date(value) : undefined}
-            onChange={(newDate) => (item[property] as unknown) = newDate.toISOString()} />;
+            onChange={(newDate) => item[property] = newDate.toISOString()} />;
     }
 });

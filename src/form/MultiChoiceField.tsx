@@ -56,7 +56,7 @@ export const MultiChoiceField: PropertyFieldFC = observer(({ info, item, propert
     );
 
     useEffect(() => setOptions(getOptions()), [item]);
-    useEffect(updateOptions, [item[property], ...(item[property] as [] ?? [])]);
+    useEffect(updateOptions, [item[property], ...(item[property] ?? [])]);
 
     if (options && item[property] && (chosen.some(fillIn => (! options.some( option => option.key === fillIn )) ) ) ) {
         setOptions([...options, ...chosen

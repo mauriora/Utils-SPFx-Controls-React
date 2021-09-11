@@ -9,7 +9,7 @@ import { PropertyFieldFC } from './PropertyField';
  * Displays the image of a URL - Picture field
  */
 export const PictureField: FunctionComponent<{ item: ListItemBase, property: string }> = observer(({ item, property }) => {
-    const link = (item as any)[property];
+    const link = item[property];
     if (link instanceof LinkItem) {
         return <Image
             src={link.url}
@@ -22,7 +22,7 @@ export const PictureField: FunctionComponent<{ item: ListItemBase, property: str
  * Displays the Link of a URL - Hyperlink field
  */
 export const LinkField: FunctionComponent<{ info: IFieldInfo, item: ListItemBase, property: string }> = observer(({ info, item, property }) =>{
-    const link = (item as any)[property];
+    const link = item[property];
     if (link instanceof LinkItem) {
         return <Link
             href={link.url}
@@ -50,14 +50,14 @@ export const UrlField: PropertyFieldFC = observer(({ info, item, property, model
                 switch (linkProperty) {
                     case 'url': linkItem[linkProperty] = newValue && (!newValue.startsWith(HTTPS)) ? HTTPS + newValue : newValue;
                         break;
+                    case 'title': linkItem[linkProperty] = newValue;
                     default:
-                        linkItem[linkProperty] = newValue;
-                        break;
+                        throw new Error(`UrlField[${property}]: '${linkProperty}' must be 'url' or 'title'`);
                 }
             }
 
             if (!link && linkItem) {
-                (item[property] as unknown) = linkItem;
+                item[property] = linkItem;
             }
         },
         [link]

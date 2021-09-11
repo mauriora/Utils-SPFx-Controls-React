@@ -13,7 +13,7 @@ export const  NoteField: PropertyFieldFC = observer(({ info, item, property }) =
             value={item[property] as string}
             isEditMode={!info.ReadOnlyField}
             placeholder={info.Description}
-            onChange={(newValue) => (item[property] as unknown) = newValue}
+            onChange={(newValue) => item[property] = newValue}
         />
     </Stack>
     :
@@ -24,6 +24,6 @@ export const  NoteField: PropertyFieldFC = observer(({ info, item, property }) =
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
         multiline autoAdjustHeight
-        onChange={(e, newValue) => (item[property] as unknown) = newValue}
+        onChange={(e, newValue) => item[property] = newValue}
     />
 );

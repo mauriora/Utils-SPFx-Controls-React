@@ -46,9 +46,9 @@ export const  LookupField: PropertyFieldFC = observer(({ info, item, property })
         }
 
         if (isMulti) {
-            (item[property] as Array<ListItemBase>) = lookUps;
+            item[property] = lookUps;
         } else {
-            (item[property] as unknown) = items.length ? lookUps[0] : undefined;
+            item[property] = items.length ? lookUps[0] : undefined;
         }
     };
 

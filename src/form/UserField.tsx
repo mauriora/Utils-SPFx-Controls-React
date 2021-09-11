@@ -38,7 +38,7 @@ export const UserField: PropertyFieldFC = observer(({ info, item, property }) =>
             }
         } else {
             const user = items.length ? await personaProps2User(items[0] as any, info) : undefined;
-            (item[property] as unknown) = user;
+            item[property] = user;
         }
     };
 
@@ -48,7 +48,7 @@ export const UserField: PropertyFieldFC = observer(({ info, item, property }) =>
         titleText={info.Title}
         showtooltip={true}
         disabled={info.ReadOnlyField}
-        onChange={onChange as any}
+        onChange={onChange}
         principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
         resolveDelay={500}
         defaultSelectedUsers={selectedUsers}

@@ -23,7 +23,7 @@ export const ChoiceField: PropertyFieldFC = observer(({ info, item, property }) 
 
     const onComboChange = useCallback(
         (e, selection?: IComboBoxOption, index?: number, value?: string) => {
-            (item[property] as unknown) = selection?.key ?? value;
+            item[property] = selection?.key ?? value;
             if (value) {
                 setOptions([...options, { key: value, text: value }]);
             }
@@ -36,7 +36,7 @@ export const ChoiceField: PropertyFieldFC = observer(({ info, item, property }) 
             const value = item[property];
 
             if (options && (! options.some(option => option.key === value))) {
-                setOptions([...options, { key: value as string, text: value as string }]);
+                setOptions([...options, { key: value, text: value }]);
             }
         },
         [item[property], item, property]
