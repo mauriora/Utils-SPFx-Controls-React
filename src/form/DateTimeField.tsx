@@ -8,7 +8,7 @@ import { getTimeFormat } from "@mauriora/controller-sharepoint-list";
 
 export const DateTimeField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
-    if (typeof value !== 'string') throw new Error(`Property '${property}' is not a string`);
+    if (undefined !== value && null !== value && typeof value !== 'string') throw new Error(`Property '${property}' is not a string, undefined or null, but it's of type ${typeof value}: ${String(value)}`);
 
     if (null == getTimeFormat( info )) {
         return <DatePicker

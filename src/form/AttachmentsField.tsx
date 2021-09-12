@@ -3,7 +3,7 @@ import * as React from "react";
 import { FunctionComponent, useState } from "react";
 import { PropertyFieldFC } from './PropertyField';
 import { observer } from 'mobx-react-lite';
-import { ListItemAttachments, IListItemAttachmentsProps } from "@pnp/spfx-controls-react";
+import { ListItemAttachments, IListItemAttachmentsProps, IListItemAttachmentsState } from "@pnp/spfx-controls-react";
 import { DragDropFiles } from "@pnp/spfx-controls-react/lib/DragDropFiles";
 import { ErrorBoundary } from "../components/ErrorBoundary";
 import { IFieldInfo, ListItemBase } from "@mauriora/controller-sharepoint-list";
@@ -32,8 +32,27 @@ const toBase64 = (file: Blob) => new Promise<ArrayBuffer>((resolve, reject) => {
 });
 
 class ListItemAttachmentsWithUpdate extends ListItemAttachments {
-    componentDidUpdate(prevProps: IListItemAttachmentsProps) {
-        if (this.props.itemId !== prevProps.itemId) {
+    componentDidUpdate(prevProps: IListItemAttachmentsProps, prevState: IListItemAttachmentsState, snapshot?: unknown) {
+        console.log(`ListItemAttachmentsWithUpdate.componentDidUpdate: ${prevProps.itemId} => ${this.props.itemId}`, { props: this.props, prevProps, prevState, snapshot });
+        if(super.componentDidUpdate) {
+            console.error(`ListItemAttachmentsWithUpdate.componentDidUpdate: ${prevProps.itemId} => ${this.props.itemId} super has super.componentDidUpdate, remove this implementation`, { props: this.props, prevProps, prevState, snapshot });
+            super.componentDidUpdate(prevProps, prevState, snapshot);
+        } else if (this.props.itemId !== prevProps.itemId) {
+            if(this.props.itemId !== this.state.itemId) {
+                console.log(`ListItemAttachmentsWithUpdate.componentDidUpdate: ${prevProps.itemId} => ${this.props.itemId} reset state and call componentDidMount`, { props: this.props, prevProps, prevState, snapshot });
+                this.state = {
+                    file: null,
+                    hideDialog: true,
+                    dialogMessage: '',
+                    attachments: [],
+                    deleteAttachment: false,
+                    disableButton: false,
+                    showPlaceHolder: false,
+                    fireUpload: false,
+                    filesToUpload: [],
+                    itemId: this.props.itemId
+                  };              
+            }
             this.componentDidMount();
         }
     }
