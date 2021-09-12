@@ -16,7 +16,9 @@ export const MultiChoiceField: PropertyFieldFC = observer(({ info, item, propert
     const choicesArray: Array<string> | false = getChoices(info);
     const chosen = item[property] ?? [];
 
-    if( ! choicesArray ) throw new TypeError(`ChoiceField(${property}) has no choices`);
+    if( ! choicesArray ) console.error(`MultiChoiceField(${property}) has no choices`, {info, choicesArray});
+    if( ! choicesArray ) throw new TypeError(`MultiChoiceField(${property}) has no choices`);
+
     if( ! Array.isArray(chosen) ) throw new TypeError(`MultiChoiceField: Property ${property} must be an array, its of type ${typeof chosen}`);
 
 

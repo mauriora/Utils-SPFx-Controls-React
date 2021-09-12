@@ -7,13 +7,13 @@ import { useMemo } from 'react';
 
 export const RatingCountField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
-    if(typeof value !== 'string') throw new Error(`RatingCountField: Property '${property}' is not a string it's ${typeof value}`);
+    if(undefined !== value && null !== value && typeof value !== 'number') throw new Error(`RatingCountField: Property '${property}' is not a number, null or undefined, but it's of type ${typeof value}: ${String(value)}`);
 
     return <FluentTextField
         iconProps={{ iconName: 'FavoriteStar' }}
         label={info.Title}
         required={info.Required}
-        value={value}
+        value={typeof value === 'number' ? value.toFixed() : value}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
         onChange={() => console.warn(`PropertyField( ${info.TypeAsString}[${info.FieldTypeKind}] ${property} ).onChange not implemented`)}
@@ -22,7 +22,7 @@ export const RatingCountField: PropertyFieldFC = observer(({ info, item, propert
 
 export const BooleanField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
-    if(typeof value !== 'boolean') throw new Error(`BooleanField: Property '${property}' is not a boolean it's ${typeof value}`);
+    if(undefined !== value && typeof value !== 'boolean') throw new Error(`BooleanField: Property '${property}' is not a boolean or undefined, but it's of type ${typeof value}: ${String(value)}`);
 
     return <Checkbox
         label={info.Title}
@@ -35,11 +35,11 @@ export const BooleanField: PropertyFieldFC = observer(({ info, item, property })
 
 export const CurrencyField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
-    if(typeof value !== 'string') throw new Error(`CurrencyField: Property '${property}' is not a string it's ${typeof value}`);
+    if(undefined !== value && null !== value && typeof value !== 'number') throw new Error(`CurrencyField: Property '${property}' is not a number, null or undefined, but it's of type ${typeof value}: ${String(value)}`);
 
     return <FluentTextField
         label={info.Title}
-        value={value}
+        value={typeof value === 'number' ? value.toFixed() : value}
         required={info.Required}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}
@@ -53,7 +53,7 @@ export const NumberField: PropertyFieldFC = observer(({ info, item, property }) 
     const minimum = useMemo(() => getMinimumValue( info ), [info]);
     const maximum = useMemo(() => getMaximumValue( info ), [info]);
 
-    if(typeof value !== 'number') throw new Error(`NumberField: Property '${property}' is not a string it's ${typeof value}`);
+    if(undefined !== value && null !== value && typeof value !== 'number') throw new Error(`NumberField: Property '${property}' is not a number, null or undefined, but it's of type ${typeof value}: ${String(value)}`);
     if(false === minimum) throw new Error(`NumberField: Property '${property}' can't get minimum value`);
     if(false === maximum) throw new Error(`NumberField: Property '${property}' can't get maximum value`);
 
@@ -75,7 +75,7 @@ export const NumberField: PropertyFieldFC = observer(({ info, item, property }) 
 
 export const TextField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
-    if(typeof value !== 'string') throw new Error(`TextField: Property '${property}' is not a string it's ${typeof value}`);
+    if(undefined !== value && null !== value && typeof value !== 'string') throw new Error(`TextField: Property '${property}' is not a string, null or undefined, but it's of type ${typeof value}: ${String(value)}`);
 
     return <FluentTextField
         label={info.Title}
@@ -90,11 +90,11 @@ export const TextField: PropertyFieldFC = observer(({ info, item, property }) =>
 
 export const CounterField: PropertyFieldFC = observer(({ info, item, property }) => {
     const value = item[property];
-    if(typeof value !== 'string') throw new Error(`CounterField: Property '${property}' is not a string it's ${typeof value}`);
+    if(undefined !== value && typeof value !== 'number') throw new Error(`CounterField: Property '${property}' is not a number or undefined, but it's of type ${typeof value}: ${String(value)}`);
 
     return <FluentTextField
         label={info.Title}
-        value={value}
+        value={typeof value === 'number' ? value.toFixed() : value}
         required={info.Required}
         readOnly={info.ReadOnlyField}
         placeholder={info.Description}

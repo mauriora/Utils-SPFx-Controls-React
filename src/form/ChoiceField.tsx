@@ -10,7 +10,8 @@ export const ChoiceField: PropertyFieldFC = observer(({ info, item, property }) 
     const choicesArray: Array<string> | false = getChoices(info);
     const value = item[property];
 
-    if(('string' !== typeof value) && ('undefined' !== typeof value) ) throw new TypeError(`ChoiceField(${property}) should be undefined or of type string, but it's of type ${typeof value}: ${String(value)}`);
+    if( ('string' !== typeof value) && ('undefined' !== typeof value) && (null !== value) ) throw new TypeError(`ChoiceField(${property}) should be of type undefined, null or string, but it's of type ${typeof value}: ${String(value)}`);
+    if( ! choicesArray ) console.error(`ChoiceField(${property}) has no choices`, {info, choicesArray});
     if( ! choicesArray ) throw new TypeError(`ChoiceField(${property}) has no choices`);
 
     const [options, setOptions] = useState<Array<{ key: string, text: string }>>();

@@ -29,8 +29,10 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
     const propertyValue = item[property];
 
     if( false === termSetId ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) can't get termset id`);
-    if( allowMultiple && (! Array.isArray(propertyValue) ) ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) allows multiple values but is not an array`);
-    if( (!allowMultiple) && (undefined !== propertyValue && (! (propertyValue instanceof MetaTerm)) ) ) throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) should be undefined or an instance of MetaTerm`);
+    if( allowMultiple && (! Array.isArray(propertyValue) ) )
+        throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) allows multiple values but is not an array`);
+    if( (!allowMultiple) && (undefined !== propertyValue && null !== propertyValue && (! (propertyValue instanceof MetaTerm)) ) )
+        throw new Error(`TaxonmyField([${item.id}]${property}(${info.InternalName})) should be undefined, null or an instance of MetaTerm, but itis of type ${typeof propertyValue}:${String(propertyValue)}`);
 
     const isKeywordField = isKeyword( info );
     const onChange = (newValue: IPickerTerms) => {

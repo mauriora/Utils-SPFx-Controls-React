@@ -17,7 +17,7 @@ const transparentFieldStyles: Partial<ITextFieldStyles> = {
 
 export const LikesCountField: FunctionComponent<LikesCountFieldProps> = observer(({ info, item, property, mini }) =>{
     const value = item[property];
-    if (typeof value !== 'number') throw new Error(`Property '${property}' is not a number it is ${typeof value}`);
+    if ( undefined !== value && null !== value && typeof value !== 'number') throw new Error(`Property '${property}' is not a number, null or undefined, but it's of type ${typeof value}:${String(value)}`);
 
     return <TextField
         iconProps={{

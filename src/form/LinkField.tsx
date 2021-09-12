@@ -43,7 +43,7 @@ type KeysMatching<ClassOf, ValueTypeOf> = { [K in keyof ClassOf]-?: ClassOf[K] e
 export const UrlField: PropertyFieldFC = observer(({ info, item, property }) => {
     const link = item[property];
 
-    if( undefined !== link && (! (link instanceof LinkItem))) throw new TypeError(`UrlField(${property}) is not undefined and not a Link instance, it's of type ${typeof link} constructor.name=$${link?.constructor?.name}`);
+    if( undefined !== link && null !== link && (! (link instanceof LinkItem))) throw new TypeError(`UrlField(${property}) is not undefined, null or a Link instance, it's of type ${typeof link}:${String(link)} constructor.name=${link?.constructor?.name}`);
 
     const onChange = useCallback(
         (linkProperty: 'url' | 'description', newValue: string) => {
