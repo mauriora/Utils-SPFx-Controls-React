@@ -25,11 +25,14 @@ interface TextFieldRenderProps {
 
 const TextFieldRender = observer(({ item, property }: TextFieldRenderProps) => (<FieldTextRenderer text={item[property] as string} />));
 
-const stripDeep = ({ controller, pnpItem, delete: fDelete, setController, source, ...rest}: Controller.ListItemBase) => {
-    const stripped = rest as any;
+const stripDeep = ({ 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    controller, pnpItem, delete: fDelete, setController, source,
+    ...rest}: Controller.ListItemBase) => {
+    const stripped = rest as Record<string, Controller.ListItemBase | Partial<Controller.ListItemBase>>;
     for( const property in stripped) {
         if( stripped[property] && ('object' === typeof( stripped[property] ))) {
-            stripped[property] = stripDeep( stripped[property] )
+            stripped[property] = stripDeep( stripped[property] as Controller.ListItemBase)
         }
     }
     return rest;

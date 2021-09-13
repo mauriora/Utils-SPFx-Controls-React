@@ -67,7 +67,7 @@ export const  LookupComboBoxField: PropertyFieldFC = observer(({ info, item, pro
             spHttpClient={(item.controller.context as SharePointContext).spHttpClient}
             multiSelect={allowsMultipleValues(info)}
             onSelectedItem={onSelectedItems}
-            selectedItems={selectedItems}            
+            selectedItems={selectedItems as unknown as Record<string,string | number>[]}            
             /**
              * @example defaultSelectedItems=[{Id: 2, Title:"Test"}]
              * @example defaultSelectedItems: [2]

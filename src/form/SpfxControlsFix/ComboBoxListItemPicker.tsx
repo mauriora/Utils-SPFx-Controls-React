@@ -4,16 +4,14 @@ import { ComboBox, IComboBoxOption } from '@fluentui/react'
 import { IComboBoxListItemPickerProps } from '@pnp/spfx-controls-react'
 import { ListItemRepository } from '@pnp/spfx-controls-react/lib/common/dal/ListItemRepository';
 
-export const ComboBoxListItemPicker: FunctionComponent<IComboBoxListItemPickerProps & { selectedItems?: any[] }> =
+export const ComboBoxListItemPicker: FunctionComponent<IComboBoxListItemPickerProps & { selectedItems?: Record<string, string | number>[] }> =
     ({ columnInternalName, keyColumnInternalName,
         defaultSelectedItems,
         selectedItems,
         filter, itemLimit,
-        keytipProps,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        keytipProps, noResultsFoundText, suggestionsHeaderText, onInitialized,
         listId,
-        noResultsFoundText,
-        suggestionsHeaderText,
-        onInitialized,
         onSelectedItem,
         spHttpClient,
         webUrl,
@@ -22,23 +20,23 @@ export const ComboBoxListItemPicker: FunctionComponent<IComboBoxListItemPickerPr
 
         /** Get SPService Factory */
         const [listItemRepo, setListItemRepo] = useState(new ListItemRepository(webUrl, spHttpClient));
-        const [listItems, setListItems] = useState<any[]>(undefined);
+        const [listItems, setListItems] = useState<Record<string,string>[]>(undefined);
 
         const [options, setOptions] = useState<Array<IComboBoxOption>>();
         const [defaultSelectedKey, setDefaultSelectedKey] = useState<(string | number)[] | null>();
         const [selectedKey, setSelectedKey] = useState<(string | number)[] | null>();
 
-        const getSelectedKeys = (items: any[]): string[] | number[] | undefined => {
+        const getSelectedKeys = (items: Record<string,string |number>[] | number[]): string[] | number[] | undefined => {
             const keyColumnName = keyColumnInternalName || "Id";
             let selectedItems: string[] | number[] | undefined = undefined;
 
             if (undefined !== items && undefined !== options) {
                 //if passed only ids
-                if (!isNaN(items[0])) {
-                    selectedItems = options.filter(opt => items.includes(opt.key)).map(item => item.key) as (string[] | number[]);
+                if (!isNaN(items[0] as number)) {
+                    selectedItems = options.filter(opt => (items as number[]).includes(opt.key as number)).map(item => item.key) as (string[] | number[]);
                 } else {
                     selectedItems = options.filter(
-                        option => items.some( item => item[keyColumnName] === option.key ) 
+                        option => items.some( (item: Record<string,string |number> | number) => typeof item === 'object' && item[keyColumnName] === option.key ) 
                     ).map(item => item.key) as (string[] | number[]);
                     // selectedItems = options.filter(
                     //     opt => items.map(selected => selected[keyColumnName]).indexOf(opt.key) >= 0).map(item => item.key) as (string[] | number[]);

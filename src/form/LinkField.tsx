@@ -35,7 +35,7 @@ export const LinkField: FunctionComponent<{ info: IFieldInfo, item: ListItemBase
 
 const HTTPS = 'https://';
 
-type KeysMatching<ClassOf, ValueTypeOf> = { [K in keyof ClassOf]-?: ClassOf[K] extends ValueTypeOf ? K : never }[keyof ClassOf];
+// type KeysMatching<ClassOf, ValueTypeOf> = { [K in keyof ClassOf]-?: ClassOf[K] extends ValueTypeOf ? K : never }[keyof ClassOf];
 
 /**
  * Displays a Url Field as Link or picture with edit fields with for link and description 
