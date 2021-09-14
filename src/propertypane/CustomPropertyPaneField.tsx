@@ -33,7 +33,7 @@ export class CustomPropertyPaneField<T> implements IPropertyPaneField<Omit<T, 'o
       this.elem = elem;
     }
     const Component = this.component
-    ReactDom.render(<Component {...this.props as any} onChange={this.onChangedWrapper} />, elem);
+    ReactDom.render(<Component {...this.props as T} onChange={this.onChangedWrapper} />, elem);
   }
 
   private onChangedWrapper = (...changeArgs: unknown[]): void => {
