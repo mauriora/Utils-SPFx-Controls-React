@@ -4,8 +4,8 @@ import { PropertyFieldProps } from "./PropertyField";
 import { observer } from 'mobx-react-lite';
 import { allowsMultipleValues, MetaTerm, getTermSetId, isKeyword } from "@mauriora/controller-sharepoint-list";
 import { EmptyGuid, IPickerTerm, IPickerTerms, TaxonomyPicker } from "@pnp/spfx-controls-react";
+export { EmptyGuid, IPickerTerm, IPickerTerms } from "@pnp/spfx-controls-react";
 
-export const REPLACE_TAG = '*TAXONOMY-REPLACE-TAG*';
 export interface TaxonmyFieldProps extends PropertyFieldProps {
     /**
      * The method is used to get the validation error message and determine whether the input value is valid or not.

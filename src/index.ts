@@ -14,7 +14,7 @@ export { PropertyField, PropertyFieldProps } from './form/PropertyField';
 export { LinkField, UrlField, PictureField } from './form/LinkField';
 export { LikesCountField, LikesCountFieldProps } from './form/LikesCountField';
 export { BooleanField, CounterField, CurrencyField, NumberField, RatingCountField, TextField } from './form/StandardHocs';
-export { TaxonmyField } from './form/TaxonmyField';
+export { EmptyGuid, TaxonmyField, IPickerTerm, IPickerTerms, TaxonmyFieldProps } from './form/TaxonmyField';
 export { UserField } from './form/UserField';
 export { CommentsField, CommentsFieldProps } from './form/CommentsField';
 export { UserPersona, UserPersonaProps, getAvatarUrl, getUserAvatarUrl } from './components/UserPersona';
