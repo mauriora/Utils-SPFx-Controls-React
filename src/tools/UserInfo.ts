@@ -39,14 +39,14 @@ export const init = (info: UserInfoPartial): UserInfoFull => {
     if (!info.email) {
         if (info.claims) {
             info.email = info.claims.split('|').pop();
-            // console.log(`USerInfo.init() set email= ${info.email} from claims= ${info.claims}`, info);
+            // console.log(`UserInfo.init() set email= ${info.email} from claims= ${info.claims}`, info);
         } else {
             throw new Error('Init UserInfo, require email or claims');
         }
     }
     if (!info.siteUrl) {
         info.siteUrl = getSiteSync('').url;
-        // console.log(`USerInfo.init() set siteUrl= ${info.siteUrl}`, info);
+        // console.log(`UserInfo.init() set siteUrl= ${info.siteUrl}`, info);
     }
     return info as UserInfoFull;
 }

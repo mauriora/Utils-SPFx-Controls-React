@@ -52,8 +52,6 @@ export const UserPersona: FunctionComponent<UserPersonaProps> = observer(
 
         const secondaryTextDefault = user.jobTitle ?? user.email;
 
-        // console.log(`UserPersona(${user.displayName})`, { user, email: user.email, avatarUrl, imageUrl, props: { ...props } });
-
         return <Persona
             text={user.displayName}
             imageUrl={avatarUrl}
