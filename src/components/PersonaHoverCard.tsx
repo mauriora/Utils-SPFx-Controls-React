@@ -164,7 +164,6 @@ const ExpandedCard: FunctionComponent<{ userClaims: string, userEmail: string }>
                 }
             } catch (getGraphError) {
                 console.error(`PersonaHoverCard.ExpandedCard.loadGraphUser: can't get graph profile for ${userEmail}`, getGraphError);
-                throwAsync(getGraphError);
             }
         },
         [userEmail]
@@ -245,7 +244,7 @@ export const PersonaHoverCard: FunctionComponent<PersonaHoverCardProps> = ({ use
         expandingCardProps={{
             onRenderCompactCard: renderCompact,
             onRenderExpandedCard: renderExpanded,
-            renderData: 1,
+            expandedCardHeight: 197,
             gapSpace: 0
         }}
         {...props}
