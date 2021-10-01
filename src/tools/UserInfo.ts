@@ -32,7 +32,7 @@ export const fromUserLookup = (source: UserLookup): UserInfoFull => init({
     jobTitle: source.jobTitle,
     displayName: source.title,
     claims: source.claims,
-    siteUrl: source.controller.site.url
+    siteUrl: source.controller?.site.url
 });
 
 export const init = (info: UserInfoPartial): UserInfoFull => {
