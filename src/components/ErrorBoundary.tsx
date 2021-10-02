@@ -34,12 +34,14 @@ export class ErrorBoundary extends React.Component<unknown, ErrorBoundaryState> 
         this.state = { error: undefined, info: undefined };
     }
 
-    private promiseRejectionHandler = (event: PromiseRejectionEvent) => {
-        console.error(`ErrorBoundary.promiseRejectionHandler`, { event });
+    public ignoredExceptions = ['Cannot access https://webshell.suite.office.com', 'Failed to retrieve a valid token'];
 
-        if ('Cannot access https://webshell.suite.office.com' === event?.reason?.message) {
-            console.error(event.reason.message, {event, reason: event.reason});
+    private promiseRejectionHandler = (event: PromiseRejectionEvent) => {
+
+        if (this.ignoredExceptions.includes( event?.reason?.message )) {
+            console.error(`ErrorBoundary.promiseRejectionHandler(): ignore: ${event.reason.message}`, {event, reason: event.reason});
         } else {
+            console.error(`ErrorBoundary.promiseRejectionHandler( ${event?.reason?.message})`, { event });
             this.setState({
                 error: event.reason ?? event.type,
                 info: { title: event.reason?.message ?? event.type }
