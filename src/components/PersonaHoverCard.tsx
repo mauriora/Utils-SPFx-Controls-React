@@ -145,7 +145,7 @@ const ExpandedCard: FunctionComponent<{ userClaims: string, userEmail: string }>
                     setProfile(newProfile);
                 }
             } catch (getProfileError) {
-                console.error(`PersonaHoverCard.ExpandedCard.loadProfile: can't get Properties for ${userClaims}`, getProfileError);
+                console.error(`PersonaHoverCard.ExpandedCard.loadProfile: can't get Properties for ${userClaims}`, {getProfileError});
                 throwAsync(getProfileError);
             }
         },
@@ -163,7 +163,7 @@ const ExpandedCard: FunctionComponent<{ userClaims: string, userEmail: string }>
                     console.error(`PersonaHoverCard.ExpandedCard.loadGraphUser: can't get graph profile for ${userEmail}`);
                 }
             } catch (getGraphError) {
-                console.error(`PersonaHoverCard.ExpandedCard.loadGraphUser: can't get graph profile for ${userEmail}`, getGraphError);
+                console.error(`PersonaHoverCard.ExpandedCard.loadGraphUser: can't get graph profile for ${userEmail}`, {getGraphError});
             }
         },
         [userEmail]
