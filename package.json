@@ -1,6 +1,6 @@
 {
   "name": "@mauriora/utils-spfx-controls-react",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,8 +16,8 @@
   "dependencies": {
     "@fluentui/react": "^8.16.0",
     "@microsoft/sp-lodash-subset": "^1.12.1",
-    "@pnp/sp": "^2.7.0",
-    "@pnp/spfx-controls-react": "^3.3.0",
+    "@pnp/sp": "2.9.0",
+    "@pnp/spfx-controls-react": "3.3.0",
     "class-transformer": "^0.4.0",
     "mobx": "^6.1.8",
     "mobx-react-lite": "^3.2.0"
@@ -27,13 +27,13 @@
     "react-dom": "16.9.0"
   },
   "devDependencies": {
-    "@microsoft/sp-webpart-base": "^1.12.1",
     "@microsoft/sp-extension-base": "^1.12.1",
+    "@microsoft/sp-webpart-base": "^1.12.1",
     "@types/react": "16.9.36",
     "@types/react-dom": "16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
-    "@typescript-eslint/typescript-estree": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "@typescript-eslint/typescript-estree": "^4.31.0",
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.25.1"
   }
