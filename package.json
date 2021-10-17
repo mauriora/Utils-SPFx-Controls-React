@@ -27,6 +27,8 @@
     "react-dom": "16.9.0"
   },
   "devDependencies": {
+    "@mauriora/eslint-config-react": "*",
+    "@mauriora/spfx-packaging": "*",
     "@microsoft/sp-extension-base": "^1.12.1",
     "@microsoft/sp-webpart-base": "^1.12.1",
     "@types/react": "16.9.36",
