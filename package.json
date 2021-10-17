@@ -15,7 +15,10 @@
   },
   "dependencies": {
     "@fluentui/react": "^8.16.0",
+    "@fluentui/theme": "^2.4.1",
+    "@mauriora/controller-sharepoint-list": "*",
     "@microsoft/sp-lodash-subset": "^1.12.1",
+    "@microsoft/sp-property-pane": "^1.12.1",
     "@pnp/sp": "2.9.0",
     "@pnp/spfx-controls-react": "3.3.0",
     "class-transformer": "^0.4.0",
@@ -23,16 +26,17 @@
     "mobx-react-lite": "^3.2.0"
   },
   "peerDependencies": {
-    "react": "16.9.0",
-    "react-dom": "16.9.0"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
     "@mauriora/eslint-config-react": "*",
+    "@mauriora/eslint-config-ts": "*",
     "@mauriora/spfx-packaging": "*",
     "@microsoft/sp-extension-base": "^1.12.1",
     "@microsoft/sp-webpart-base": "^1.12.1",
-    "@types/react": "16.9.36",
-    "@types/react-dom": "16.9.8",
+    "@types/react": "^16.14.0",
+    "@types/react-dom": "^16.9.14",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
     "@typescript-eslint/typescript-estree": "^4.31.0",
