@@ -1,6 +1,6 @@
 {
   "name": "@mauriora/utils-spfx-controls-react",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,7 +18,6 @@
     "@fluentui/theme": "^2.4.1",
     "@mauriora/controller-sharepoint-list": "*",
     "@microsoft/sp-lodash-subset": "^1.12.1",
-    "@microsoft/sp-property-pane": "^1.12.1",
     "@pnp/sp": "2.9.0",
     "@pnp/spfx-controls-react": "3.3.0",
     "class-transformer": "^0.4.0",

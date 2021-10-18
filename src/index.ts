@@ -20,5 +20,4 @@ export { CommentsField, CommentsFieldProps } from './form/CommentsField';
 export { UserPersona, UserPersonaProps, getAvatarUrl, getUserAvatarUrl } from './components/UserPersona';
 export { PersonaHoverCard, PersonaHoverCardProps } from './components/PersonaHoverCard';
 export { RatingField } from './form/RatingField';
-export { createPropertyPaneSitePicker, ISite } from './propertypane/PropertyPaneSitePicker';
 export { fromCommentAuthor, fromUserLookup, UserInfoPartial } from './tools/UserInfo';
