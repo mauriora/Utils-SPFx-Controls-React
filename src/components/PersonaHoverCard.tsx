@@ -21,7 +21,7 @@ import "@pnp/sp/profiles";
 import { NeutralColors } from '@fluentui/theme';
 import { copyTextToClipboard } from "../tools/Clipboard";
 import { UserInfoFull } from '../tools/UserInfo';
-import { getUser, User } from "@mauriora/controller-sharePoint-list";
+import { getUser, User } from "@mauriora/controller-sharepoint-list";
 import { useAsyncError } from '../hooks/AsyncError'
 export interface PersonaHoverCardProps extends IHoverCardProps {
     user: UserInfoFull;

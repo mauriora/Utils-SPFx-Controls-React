@@ -2,7 +2,7 @@ import { IPersonaProps, Persona, PersonaSize } from "@fluentui/react";
 import { observer } from "mobx-react-lite";
 import * as React from "react";
 import { FunctionComponent, useMemo } from "react";
-import { UserLookup } from "@mauriora/controller-sharePoint-list";
+import { UserLookup } from "@mauriora/controller-sharepoint-list";
 import { UserInfoPartial } from "../tools/UserInfo";
 
 export const getAvatarUrl = (siteUrl: string, userEmail: string, size: 'S' | 'M' | 'L' = 'L'): string =>

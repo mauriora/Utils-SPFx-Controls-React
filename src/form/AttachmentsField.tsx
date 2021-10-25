@@ -8,8 +8,7 @@ import { DragDropFiles } from "@pnp/spfx-controls-react/lib/DragDropFiles";
 import { ErrorBoundary } from "../components/ErrorBoundary";
 import { IFieldInfo, ListItemBase } from "@mauriora/controller-sharepoint-list";
 import { useAsyncError } from "..";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { ExtensionContext } from "@microsoft/sp-extension-base";
+import { BaseComponentContext } from "@microsoft/sp-component-base";
 
 interface FileInfo {
     fullPath: string;
@@ -62,7 +61,7 @@ interface AttachmentControlProps {
     info: IFieldInfo,
     item: ListItemBase;
     listId: string;
-    context: WebPartContext | ExtensionContext;
+    context: BaseComponentContext;
 }
 const AttachmentControl: FunctionComponent<AttachmentControlProps> = observer(({ info, item, listId, context }) => {
     const [uploading, setUploading] = useState(false);
