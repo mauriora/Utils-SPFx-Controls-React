@@ -45,8 +45,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             ignoredExceptions.push( ... props.ignoredExceptions );
         }
         this.state = { error: undefined, info: undefined, ignoredExceptions };
-
-        console.log(`ErrorBoundary()`, {ignoredExceptions, props: this.props, state: this.state, defaultIgnoredExceptions: ErrorBoundary.defaultIgnoredExceptions});
     }
 
     private promiseRejectionHandler = (event: PromiseRejectionEvent) => {
@@ -108,18 +106,12 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             if(nextProps.ignoredExceptions && nextProps.ignoredExceptions.length) {
                 ignoredExceptions.push( ... nextProps.ignoredExceptions );
             }
-            console.log(`ErrorBoundary.getDerivedStateFromProps changed`, {nextProps, prevState, prevCustomIgnored, ignoredExceptions });
-    
             return { ignoredExceptions };
         }
-        console.log(`ErrorBoundary.getDerivedStateFromProps not changed`, {nextProps, prevState, prevCustomIgnored });
-
         return null;
     }
 
     render(): React.ReactNode {
-        console.log(`ErrorBoundary.render()`, {state: this.state, props: this.props, me: this});
-
         if (this.state.error) {
             return <ErrorBar
                 message={`${String(this.state.info.title ?? this.state.error + (this.state.info.description ? ': ' + this.state.info.description : ''))}`}
