@@ -1,15 +1,26 @@
-import * as React from 'react';
-import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { ActivityItem, HoverCard, HoverCardType, IconButton, IStackTokens, Link, mergeStyleSets, PersonaSize, Spinner, Stack, StackItem, Text, TextField } from '@fluentui/react';
-import { PropertyFieldProps } from './PropertyField';
+import {
+    ActivityItem,
+    HoverCard, HoverCardType,
+    IconButton,
+    IStackTokens,
+    Link,
+    mergeStyleSets,
+    PersonaSize,
+    Spinner, Stack, StackItem,
+    Text, TextField
+} from '@fluentui/react';
 import { ListItem } from '@mauriora/controller-sharepoint-list';
 import { ICommentInfo } from '@pnp/sp/comments';
+import he from 'he';
+import { observer } from 'mobx-react-lite';
+import * as React from 'react';
+import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
 import { ErrorBoundary } from '../components/ErrorBoundary';
-import { useAsyncError } from '../hooks/AsyncError';
-import { UserPersona } from '../components/UserPersona';
 import { PersonaHoverCard } from '../components/PersonaHoverCard';
+import { UserPersona } from '../components/UserPersona';
+import { useAsyncError } from '../hooks/AsyncError';
 import { fromCommentAuthor } from '../tools/UserInfo';
+import { PropertyFieldProps } from './PropertyField';
 
 interface NewCommentFieldProps {
     item: ListItem;
@@ -94,6 +105,7 @@ const Comment: FunctionComponent<{ comment: ICommentInfo, commentedText: string,
     const isNotFromToday = useMemo(() => isNotToday(dateObject), [dateObject]);
     const timeString = useMemo(() => dateObject.toLocaleTimeString(), [dateObject]);
     const dateString = useMemo(() => isNotFromToday ? dateObject.toLocaleDateString() : undefined, [dateObject]);
+    const commentText = useMemo(() => he.decode(comment.text), [comment.text]);
 
     return <ActivityItem
         activityDescription={
@@ -107,7 +119,7 @@ const Comment: FunctionComponent<{ comment: ICommentInfo, commentedText: string,
                 <Text>{commentedText}</Text>
             </PersonaHoverCard>
         }
-        comments={comment.text}
+        comments={commentText}
         timeStamp={(isNotFromToday ? dateString + ' ' : '') + timeString}
         className={classNames.activityRoot}
         activityIcon={
