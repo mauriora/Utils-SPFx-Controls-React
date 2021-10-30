@@ -20,7 +20,7 @@
   "dependencies": {
     "@fluentui/react": "^8.16.0",
     "@fluentui/theme": "^2.4.1",
-    "@mauriora/controller-sharepoint-list": "0.1.1",
+    "@mauriora/controller-sharepoint-list": "0.1.2",
     "@microsoft/sp-lodash-subset": "1.12.1",
     "@pnp/sp": "2.9.0",
     "@pnp/spfx-controls-react": "3.3.0",
