@@ -13,6 +13,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "prepare": "yarn rebuild",
     "build": "eslint . && tsc --build",
     "rebuild": "eslint . && tsc --build --clean && tsc --build",
     "clean": "tsc --build --clean"
