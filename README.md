@@ -10,6 +10,12 @@ Not quite public yet, this is part of the [hybrid repro MVC SharePoint example i
 
 ## Components
 
+### Hooks
+
+#### AsyncError
+
+[AsyncError](.\src\hooks\AsyncError.tsx) A hook usefull to catch an error in an async operation and rethrow it in the main loop.
+
 ### Form & Fields
 
 #### Common interface
@@ -67,7 +73,7 @@ A single PropertyField can be created for a specific field type, instead of usin
 
 ### MessageBar
 
-HOC have been created for standard message bar cases. The MessageBar should be used instead of a intrusive messagebox when practicle.
+A HOC have been created for standard message bar cases. The MessageBar should be used instead of a intrusive messagebox when practicle.
 
 ## Getting Started
 
@@ -78,6 +84,6 @@ Include this module/repositiory in your solution as a submodule in shared. Refer
 
 ```json
   "dependencies": {
-    "@mauriora/utils-spfx-controls-react": "*"
+    "@mauriora/utils-spfx-controls-react": "latest"
   }
 ```
