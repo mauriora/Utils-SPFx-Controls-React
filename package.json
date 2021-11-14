@@ -1,6 +1,6 @@
 {
   "name": "@mauriora/utils-spfx-controls-react",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "private": false,
   "license": "MIT",
   "main": "dist/index.js",
