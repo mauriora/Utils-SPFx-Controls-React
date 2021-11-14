@@ -16,6 +16,30 @@ Not quite public yet, this is part of the [hybrid repro MVC SharePoint example i
 
 [AsyncError](.\src\hooks\AsyncError.tsx) A hook usefull to catch an error in an async operation and rethrow it in the main loop.
 
+Example:
+
+```typescript
+    import { useAsyncError } from '@mauriora/utils-spfx-controls-react';
+
+    const ItemForm: FunctionComponent<...> = ({ model, item }) => {
+
+        const throwError = useAsyncError();
+
+        const submitItem = useCallback(
+            async () => {
+                try {
+                    await model.submit(item);
+                } catch (submitError) {
+                    throwError(submitError);
+                }
+            },
+            [model, item]
+        );
+        ...
+    }
+
+```
+
 ### Form & Fields
 
 #### Common interface
