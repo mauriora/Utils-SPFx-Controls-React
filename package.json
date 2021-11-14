@@ -14,9 +14,8 @@
   "scripts": {
     "lint": "eslint .",
     "prepare": "yarn rebuild",
-    "build": "eslint . && tsc --build",
-    "rebuild": "eslint . && tsc --build --clean && tsc --build",
-    "clean": "tsc --build --clean"
+    "build": "eslint .",
+    "rebuild": "eslint . && tsc --build --clean && tsc --build"
   },
   "dependencies": {
     "@fluentui/react": "^8.16.0",
