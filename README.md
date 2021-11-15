@@ -1,6 +1,7 @@
 # Introduction
 
-Wrappers and tools for @pnp/SPFX-Controls-react and @FluentUI/react. 
+Wrappers and tools for [@pnp/SPFX-Controls-react](https://github.com/pnp/sp-dev-fx-controls-react/) and [@FluentUI/react](https://github.com/microsoft/fluentui/tree/master/packages/react) to work with the [SharePoint List Controller](https://github.com/mauriora/Controller-SharePoint-List).
+
 For each FieldType a component with label exists, that excepts the same props.
 Mostly they are straight HOCs implementing onChange. Sometimes they'll add the label.
 
@@ -8,11 +9,9 @@ Mostly they are straight HOCs implementing onChange. Sometimes they'll add the l
 
 Not quite public yet, this is part of the [hybrid repro MVC SharePoint example implementation](https://github.com/mauriora/reusable-hybrid-repo-mvc-spfx-examples)
 
-## Components
+## Hooks
 
-### Hooks
-
-#### AsyncError
+### AsyncError
 
 [AsyncError](.\src\hooks\AsyncError.tsx) A hook usefull to catch an error in an async operation and rethrow it in the main loop.
 
@@ -39,6 +38,8 @@ Example:
     }
 
 ```
+
+## Components
 
 ### Form & Fields
 
