@@ -110,6 +110,10 @@ A single PropertyField can be created for a specific field type, instead of usin
 
 A HOC have been created for standard message bar cases. The MessageBar should be used instead of a intrusive messagebox when practicle.
 
+### PersonaHoverCard
+
+A hover initially brief and then expanding to details like mobile phone.
+
 ## Getting Started
 
 Include this module/repositiory in your solution as a submodule in shared. Reference through the `package.json` of the executable, e.g. WebPart, ListExtension or similar.
