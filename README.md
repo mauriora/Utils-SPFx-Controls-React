@@ -41,7 +41,17 @@ Example:
 
 ## Components
 
-### Form & Fields
+### Form and Fields
+
+A property value is always passed as item and property name. This enables statemanagement. Info contains field information like Displayname.
+
+```typescript
+    return <TextField
+        info={info}
+        property={'myTextField'}
+        item={item}
+    />;
+```
 
 #### Common interface
 
