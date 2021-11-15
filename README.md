@@ -43,7 +43,7 @@ Example:
 
 ### Form and Fields
 
-A property value is always passed as item and property name. This enables statemanagement. Info contains field information like Displayname.
+A property is always passed as `item` and `property`-name, to enable statemanagement. `info` contains field information like displayname and description.
 
 ```typescript
     return <TextField
