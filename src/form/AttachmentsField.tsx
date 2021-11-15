@@ -32,13 +32,11 @@ const toBase64 = (file: Blob) => new Promise<ArrayBuffer>((resolve, reject) => {
 
 class ListItemAttachmentsWithUpdate extends ListItemAttachments {
     componentDidUpdate(prevProps: IListItemAttachmentsProps, prevState: IListItemAttachmentsState, snapshot?: unknown) {
-        console.log(`ListItemAttachmentsWithUpdate.componentDidUpdate: ${prevProps.itemId} => ${this.props.itemId}`, { props: this.props, prevProps, prevState, snapshot });
         if(super.componentDidUpdate) {
             console.error(`ListItemAttachmentsWithUpdate.componentDidUpdate: ${prevProps.itemId} => ${this.props.itemId} super has super.componentDidUpdate, remove this implementation`, { props: this.props, prevProps, prevState, snapshot });
             super.componentDidUpdate(prevProps, prevState, snapshot);
         } else if (this.props.itemId !== prevProps.itemId) {
             if(this.props.itemId !== this.state.itemId) {
-                console.log(`ListItemAttachmentsWithUpdate.componentDidUpdate: ${prevProps.itemId} => ${this.props.itemId} reset state and call componentDidMount`, { props: this.props, prevProps, prevState, snapshot });
                 this.state = {
                     file: null,
                     hideDialog: true,
