@@ -15,8 +15,6 @@ const fallbackCopyTextToClipboard = (text: string) => {
     let successful = false;
     try {
         successful = document.execCommand('copy');
-        const msg = successful ? 'successful' : 'unsuccessful';
-        console.log('Fallback: Copying text command was ' + msg);
     } catch (err) {
         console.error('Fallback: Oops, unable to copy', err);
     } finally {
@@ -31,7 +29,6 @@ export const copyTextToClipboard = async (text: string): Promise<boolean> => {
     }
     try {
         await navigator.clipboard.writeText(text);
-        console.log('Async: Copying to clipboard was successful!');
         return true;
     } catch (err) {
         console.error('Async: Could not copy text: ', err);
