@@ -65,8 +65,6 @@ export const TaxonmyField: FunctionComponent<TaxonmyFieldProps> = observer(({ in
     const isKeywordField = useMemo( () => isKeyword(info), [info] );
     const onChange = useCallback(
         (newValue: IPickerTerms) => {
-            console.log(`TaxonmyField.onChange(${item.id}.${property}) allowMultiple=${allowMultiple}`, { newValue });
-
             if (allowMultiple) {
                 const termlist = item[property] as Array<MetaTerm>;
 
