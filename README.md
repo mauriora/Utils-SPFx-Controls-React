@@ -2,7 +2,7 @@
 
 Wrappers and tools for [@pnp/SPFX-Controls-react](https://github.com/pnp/sp-dev-fx-controls-react/) and [@FluentUI/react](https://github.com/microsoft/fluentui/tree/master/packages/react) to work with the [SharePoint List Controller](https://github.com/mauriora/Controller-SharePoint-List).
 
-For each FieldType a component with label exists, that excepts the same props.
+For each FieldType a component with label exists, that accpets the same props.
 Mostly they are straight HOCs implementing onChange. Sometimes they'll add the label.
 
 ## Note
