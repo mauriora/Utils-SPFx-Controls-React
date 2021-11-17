@@ -119,7 +119,7 @@ A HOC have been created for standard message bar cases. The MessageBar should be
 
 ### PersonaHoverCard
 
-A hover initially brief and then expanding to details like mobile phone.
+A persona card hover around any element. Initially brief and then expanding to details like mobile phone.
 
 ```typescript
     return <PersonaHoverCard user={spUser}>
