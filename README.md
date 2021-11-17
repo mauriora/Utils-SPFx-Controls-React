@@ -77,20 +77,22 @@ Call this to create a generic field for an SharePointListItem property. It choos
 The example creates a form with a field for each property of a list:
 
 ```typescript
+
     return <Stack>
-        {controller.propertyFields.forEach(
+        {model.propertyFields.map(
             (info, property) =>
                 <PropertyField 
                     key={property}
                     info={info}
                     property={property}
                     item={item}
-                    context={controller.context}
-                    controller={controller} />
+                    model={model} />
             }
         )}
     </Stack>;
 ```
+
+Currently supported: AttachmentsField, BooleanField, ChoiceField, CounterField, CurrencyField, DateTimeField,  LookupComboBoxField, LookupField, MultiChoiceField, NoteField, NumberField, RatingCountField, RatingField, TaxonmyField, TextField, UrlField, UserField, LikesCountField
 
 #### Specific Property fields
 

@@ -23,6 +23,10 @@ export interface PropertyFieldProps<ItemType extends ListItem = ListItem> {
 
 export type PropertyFieldFC<ItemType extends ListItem = ListItem> = FunctionComponent<PropertyFieldProps<ItemType>>;
 
+/**
+ * Creates a property field depending on info.FieldTypeKind and info.TypeAsString.
+ * This is used to create dynamic forms.
+ */
 export const PropertyField: PropertyFieldFC = observer((props) => {
     switch (props.info.FieldTypeKind) {
         case FieldTypes.Invalid:
