@@ -77,8 +77,13 @@ Call this to create a generic field for an SharePointListItem property. It choos
 The example creates a form with a field for each property of a list:
 
 ```typescript
+interface FormProps {
+    model: SharePointModel<ListItem>;
+    item: ListItem;
+};
 
-    return <Stack>
+const ItemForm: FC<FormProps> = ({ model, item }) =>
+    <Stack>
         {model.propertyFields.map(
             (info, property) =>
                 <PropertyField 
