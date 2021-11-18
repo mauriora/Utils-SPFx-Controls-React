@@ -122,15 +122,15 @@ A HOC have been created for standard message bar cases. The MessageBar should be
 A persona card hover around any element. Initially brief and then expanding to details like mobile phone.
 
 ```typescript
-    return <PersonaHoverCard user={spUser}>
-        <UserPersona
-            user={spUser}
-            size={PersonaSize.size24}
-            imageUrl={spUser.picture}
-            imageAlt={spUser.title}
-            text={spUser.title}
-        />
-    </PersonaHoverCard>;
+return <PersonaHoverCard user={spUser}>
+    <UserPersona
+        user={spUser}
+        size={PersonaSize.size24}
+        imageUrl={spUser.picture}
+        imageAlt={spUser.title}
+        text={spUser.title}
+    />
+</PersonaHoverCard>;
 
 ```
 
