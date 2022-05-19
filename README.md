@@ -26,21 +26,28 @@ Access to a the property of this field is done via `item[property]`. Dereferenci
 ### Generic PropertyField
 Call this to create a generic field for an SharePointListItem property. It choose the specific Field component based on the fieldtype.
 The example creates a form with a field for each property of a list:
+
 ```typescript
-    return <Stack>
-        {controller.propertyFields.forEach(
+interface FormProps {
+    model: SharePointModel<ListItem>;
+    item: ListItem;
+};
+
+const ItemForm: FC<FormProps> = ({ model, item }) =>
+    <Stack>
+        {model.propertyFields.map(
             (info, property) =>
-                <PropertyField 
+                <PropertyField
                     key={property}
                     info={info}
                     property={property}
                     item={item}
-                    context={controller.context}
-                    controller={controller} />
-            }
+                    model={model} />
         )}
     </Stack>;
 ```
+
+Currently supported: AttachmentsField, BooleanField, ChoiceField, CounterField, CurrencyField, DateTimeField,  LookupComboBoxField, LookupField, MultiChoiceField, NoteField, NumberField, RatingCountField, RatingField, TaxonmyField, TextField, UrlField, UserField, LikesCountField
 
 ### Specific Property fields
 A single PropertyField can be created for a specific field type, instead of using the generic approach.
@@ -53,13 +60,28 @@ A single PropertyField can be created for a specific field type, instead of usin
         controller={controller}
     />;
 ```
+### PersonaHoverCard
+
+A persona card hover around any element. Initially brief and then expanding to details like mobile phone.
+
+```typescript
+    return <PersonaHoverCard user={spUser}>
+        <UserPersona
+            user={spUser}
+            size={PersonaSize.size24}
+            imageUrl={spUser.picture}
+            imageAlt={spUser.title}
+            text={spUser.title}
+        />
+    </PersonaHoverCard>;
+
+```
 
 ## MessageBar
 HOC have been created for standard message bar cases. The MessageBar should be used instead of a intrusive messagebox when practicle.
 
 
-
-# Getting Started
+## Getting Started
 Include this module/repositiory in your solution as a submodule in shared. Reference through the `package.json` of the executable, e.g. WebPart, ListExtension or similar.
 
 1.	Add as a submodule to your solution
