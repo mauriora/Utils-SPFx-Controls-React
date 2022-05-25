@@ -20,7 +20,7 @@
     "@fluentui/theme": "^2.6.6",
     "@mauriora/controller-sharepoint-list": "^0.1.10",
     "@microsoft/sp-lodash-subset": "1.12.1",
-    "@pnp/sp": "2.9.0",
+    "@pnp/sp": "2.13.0",
     "@pnp/spfx-controls-react": "3.3.0",
     "class-transformer": "^0.4.0",
     "mobx": "^6.6.0",
