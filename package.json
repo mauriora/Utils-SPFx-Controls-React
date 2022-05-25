@@ -21,7 +21,7 @@
     "@mauriora/controller-sharepoint-list": "^0.1.10",
     "@microsoft/sp-lodash-subset": "1.14.0",
     "@pnp/sp": "2.13.0",
-    "@pnp/spfx-controls-react": "3.3.0",
+    "@pnp/spfx-controls-react": "3.8.0",
     "class-transformer": "^0.4.0",
     "mobx": "^6.6.0",
     "mobx-react-lite": "^3.4.0"
