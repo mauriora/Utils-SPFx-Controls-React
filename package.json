@@ -16,8 +16,8 @@
     "clean": "tsc --build --clean"
   },
   "dependencies": {
-    "@fluentui/react": "^8.16.0",
-    "@fluentui/theme": "^2.4.1",
+    "@fluentui/react": "^8.69.0",
+    "@fluentui/theme": "^2.6.6",
     "@mauriora/controller-sharepoint-list": "^0.1.10",
     "@microsoft/sp-lodash-subset": "1.12.1",
     "@pnp/sp": "2.9.0",
