@@ -32,6 +32,7 @@ interface ErrorVariants {
 
 export interface ErrorBoundaryProps {
     ignoredExceptions?: Array<string>;
+    children?: React.ReactNode;
 }
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
