@@ -5,6 +5,7 @@ import { ActivityItem, HoverCard, HoverCardType, IconButton, IStackTokens, Link,
 import { PropertyFieldProps } from './PropertyField';
 import { ListItem } from '@mauriora/controller-sharepoint-list';
 import { ICommentInfo } from '@pnp/sp/comments';
+import "@pnp/sp/comments/item";
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { useAsyncError } from '../hooks/AsyncError';
 import { UserPersona } from '../components/UserPersona';
@@ -143,7 +144,7 @@ export const CommentsField: CommentsFieldFC = observer(({ item, newCommentPlaceh
 
     const loadComments = useCallback(
         () => {
-            item.pnpItem.comments.get()
+            item.pnpItem.comments()
                 .then(newComments => {
                     setComments(newComments);
                     setUpdating(false);
