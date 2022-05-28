@@ -1,4 +1,5 @@
 # Utils SPFx controls React
+
 [![Fluent UI React 8.69.0](https://img.shields.io/badge/Fluent%20UI%20React-8.69.0-green.svg)](https://github.com/microsoft/fluentui/blob/master/packages/react/README.md)
 [![Mobx 6.1.8](https://img.shields.io/badge/MobX-6.1.8-yellow.svg)](https://mobx.js.org/)
 [![Node.js v14](https://img.shields.io/badge/Node.js-v14-orange.svg)](https://nodejs.org/en/download/releases/)
@@ -8,17 +9,15 @@
 [![SPFx React Controls 3.8.0](https://img.shields.io/badge/SPFx%20React%20Controls-3.8.0-green.svg)](https://pnp.github.io/sp-dev-fx-controls-react/)
 [![Yarn 3.2.1](https://img.shields.io/badge/Yarn-3.2.1-green.svg)](https://yarnpkg.com/)
 
-## Overview
-
 Wrappers and tools for [@pnp/SPFX-Controls-react](https://github.com/pnp/sp-dev-fx-controls-react) and [@FluentUI/react](https://github.com/microsoft/fluentui/tree/master/packages/react).
 For each FieldType a component with label exists, that excepts the same props.
 Mostly they are straight HOCs implementing `onChange`, sometimes they'll add the label.
 
+> This is part of the [hybrid repro MVC SharePoint example implementation](https://github.com/mauriora/reusable-hybrid-repo-mvc-spfx-examples)
+
 ## Table of content
 
-- [Overview](#overview)
 - [Table of content](#table-of-content)
-- [Note](#note)
 - [Components](#components)
   - [Form & Fields](#form--fields)
     - [Common interface](#common-interface)
@@ -29,10 +28,6 @@ Mostly they are straight HOCs implementing `onChange`, sometimes they'll add the
 - [Getting Started](#getting-started)
   - [Build and Test](#build-and-test)
 - [Contribute](#contribute)
-
-## Note
-
-Not quite public yet, this is part of the [hybrid repro MVC SharePoint example implementation](https://github.com/mauriora/reusable-hybrid-repo-mvc-spfx-examples)
 
 ## Components
 
