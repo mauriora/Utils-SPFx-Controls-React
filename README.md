@@ -1,10 +1,18 @@
 # Utils SPFx controls React
+[![Fluent UI React 8.69.0](https://img.shields.io/badge/Fluent%20UI%20React-8.69.0-green.svg)](https://github.com/microsoft/fluentui/blob/master/packages/react/README.md)
+[![Mobx 6.1.8](https://img.shields.io/badge/MobX-6.1.8-yellow.svg)](https://mobx.js.org/)
+[![Node.js v14](https://img.shields.io/badge/Node.js-v14-green.svg)](https://nodejs.org/en/download/releases/)
+[![PnPjs 3.15.0](https://img.shields.io/badge/PnPjs-3.3.2-green.svg)](https://pnp.github.io/pnpjs/)
+[![SharePoint Online](https://img.shields.io/badge/SharePoint-Online-yellow.svg)](https://docs.microsoft.com/en-us/sharepoint/introduction)
+[![SPFx 1.15.0](https://img.shields.io/badge/SPFx-1.15.0-green.svg)](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview)
+[![SPFx React Controls 3.8.0](https://img.shields.io/badge/SPFx%20React%20Controls-3.8.0-green.svg)](https://pnp.github.io/sp-dev-fx-controls-react/)
+[![Yarn 3.2.1](https://img.shields.io/badge/Yarn-3.2.1-green.svg)](https://yarnpkg.com/)
 
 ## Overview
 
 Wrappers and tools for [@pnp/SPFX-Controls-react](https://github.com/pnp/sp-dev-fx-controls-react) and [@FluentUI/react](https://github.com/microsoft/fluentui/tree/master/packages/react).
 For each FieldType a component with label exists, that excepts the same props.
-Mostly they are straight HOCs implementing onChange, sometimes they'll add the label.
+Mostly they are straight HOCs implementing `onChange`, sometimes they'll add the label.
 
 ## Table of content
 
@@ -125,8 +133,13 @@ Include this module/repositiory in your solution as a submodule in shared. Refer
 
 ### Build and Test
 
-TODO: Describe and show how to build your code and run the tests.
+To build from the sources, clone this repo and execute:
+
+```shell
+    yarn install
+    yarn run build
+```
 
 ## Contribute
 
-TODO: Explain how other users and developers can contribute to make your code better.
+Please feel aprreciate to contribute. Priority at this stage is cleaning up and documentation.
