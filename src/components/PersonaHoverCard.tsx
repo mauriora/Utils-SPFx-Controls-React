@@ -16,13 +16,14 @@ import {
 import * as React from "react";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { UserPersona } from "./UserPersona";
-import { sp } from "@pnp/sp";
+// import { SPFI } from "@pnp/sp";
 import "@pnp/sp/profiles";
 import { NeutralColors } from '@fluentui/theme';
 import { copyTextToClipboard } from "../tools/Clipboard";
 import { UserInfoFull } from '../tools/UserInfo';
 import { getUser, User } from "@mauriora/controller-sharepoint-list";
 import { useAsyncError } from '../hooks/AsyncError'
+import { getDefaultSite } from "@mauriora/controller-sharepoint-list/dist/controller/SharePoint/Site";
 export interface PersonaHoverCardProps extends IHoverCardProps {
     user: UserInfoFull;
     sendEmailButtonText?: string;
@@ -130,6 +131,7 @@ const ExpandedCard: FunctionComponent<{ userClaims: string, userEmail: string }>
     const loadProfile = useCallback(
         async () => {
             try {
+                const sp = getDefaultSite().sp;
                 const newProfile = await sp.profiles.getPropertiesFor(userClaims);
 
                 if (!newProfile?.UserProfileProperties) {
