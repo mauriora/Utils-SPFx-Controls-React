@@ -1,6 +1,6 @@
 {
   "name": "@mauriora/utils-spfx-controls-react",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -18,7 +18,7 @@
   "dependencies": {
     "@fluentui/react": "^8.69.0",
     "@fluentui/theme": "^2.6.6",
-    "@mauriora/controller-sharepoint-list": "^0.2.5",
+    "@mauriora/controller-sharepoint-list": "^0.2.6",
     "@microsoft/sp-lodash-subset": "1.14.0",
     "@pnp/sp": "3.3.2-v3nightly.20220601",
     "@pnp/spfx-controls-react": "3.8.0",
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@mauriora/eslint-config-react": "0.0.1",
     "@mauriora/eslint-config-ts": "0.0.1",
-    "@mauriora/spfx-packaging": "^0.2.3",
+    "@mauriora/spfx-packaging": "^0.2.4",
     "@microsoft/sp-component-base": "1.14.0",
     "@types/react": "16.9.36",
     "@types/react-dom": "16.9.16",
