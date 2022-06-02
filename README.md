@@ -5,7 +5,7 @@
 [![Node.js v14](https://img.shields.io/badge/Node.js-v14-yellow.svg)](https://nodejs.org/en/download/releases/)
 [![PnPjs 3.15.0](https://img.shields.io/badge/PnPjs-3.3.2-green.svg)](https://pnp.github.io/pnpjs/)
 [![SharePoint Online](https://img.shields.io/badge/SharePoint-Online-yellow.svg)](https://docs.microsoft.com/en-us/sharepoint/introduction)
-[![SPFx 1.15.0](https://img.shields.io/badge/SPFx-1.15.0-green.svg)](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview)
+[![SPFx 1.14.0](https://img.shields.io/badge/SPFx-1.14.0-green.svg)](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview)
 [![SPFx React Controls 3.8.0](https://img.shields.io/badge/SPFx%20React%20Controls-3.8.0-green.svg)](https://pnp.github.io/sp-dev-fx-controls-react/)
 [![Yarn 3.2.1](https://img.shields.io/badge/Yarn-3.2.1-green.svg)](https://yarnpkg.com/)
 
@@ -47,7 +47,7 @@ interface PropertyFieldProps {
 }
 ```
 
-Access to a the property of this field is done via `item[property]`. Dereferencing at the latest stage enables performance with tools like MobX and always provides the entire context to a field. This is needed for fields like `RatingCount` and `RatingAverage`, wich are generally displayed in one field.
+Access to a the property of this field is done via `item[property]`. Dereferencing at the latest stage enables performance with tools like MobX and always provides the entire context to a field. This is needed for fields like `RatingCount` and `RatingAverage`, which are generally displayed in one field.
 `info` is the `IFieldInfo` for the represented SharePointfield. `info` contains important values like `Title` as field-displayname, `FieldTypeKind` and `TypeAsString`.
 `controller` and `context` are passed for edge cases requiring more "context", e.g. fields that do their own SharePoint access like PeoplePicker, LookupListItemPicker, ... .
 
@@ -111,11 +111,11 @@ A persona card hover around any element. Initially brief and then expanding to d
 
 ### MessageBar
 
-HOC have been created for standard message bar cases. The MessageBar should be used instead of a intrusive messagebox when practicle.
+HOC have been created for standard message bar cases. The MessageBar should be used instead of a intrusive messagebox when practical.
 
 ## Getting Started
 
-Include this module/repositiory in your solution as a submodule in shared. Reference through the `package.json` of the executable, e.g. WebPart, ListExtension or similar.
+Include this module/repository in your solution as a submodule in shared. Reference through the `package.json` of the executable, e.g. WebPart, ListExtension or similar.
 
 1. Add as a submodule to your solution
 2. Add to `package.json`
@@ -137,4 +137,4 @@ To build from the sources, clone this repo and execute:
 
 ## Contribute
 
-Please feel aprreciate to contribute. Priority at this stage is cleaning up and documentation.
+Please feel appreciate to contribute. Priority at this stage is cleaning up and documentation.
