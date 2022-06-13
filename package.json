@@ -24,7 +24,7 @@
         "@fluentui/theme": "^2.6.6",
         "@mauriora/controller-sharepoint-list": "^0.2.6",
         "@microsoft/sp-lodash-subset": "1.14.0",
-        "@pnp/sp": "3.3.2-v3nightly.20220601",
+        "@pnp/sp": "3.4.0",
         "@pnp/spfx-controls-react": "3.8.0",
         "class-transformer": "^0.5.1",
         "mobx": "^6.6.0",
